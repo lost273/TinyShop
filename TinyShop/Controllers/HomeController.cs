@@ -3,20 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TinyShop.Filters;
 
 namespace TinyShop.Controllers {
+    [MyAuth]
     public class HomeController : Controller {
         public ActionResult Index () {
             return View();
         }
 
-        public ActionResult About () {
+        public ActionResult Diagram () {
             ViewBag.Message = "Your application description page.";
 
             return View();
         }
 
-        public ActionResult Contact () {
+        public ActionResult Сonfiguration () {
             ViewBag.Message = "Your contact page.";
 
             return View();
