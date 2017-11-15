@@ -1,6 +1,15 @@
-﻿@{
-    ViewBag.Title = "Сonfiguration";
-}
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+﻿@model TinyShop.Models.Product
 
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>New product</h2>
+
+@using (Html.BeginForm()) {
+    @Html.LabelFor(model => model.Name, "Product name")
+    <br />
+    @Html.EditorFor(model => model.Name)
+    <br /><br />
+    <input class="btn btn-success" type="submit" value="Add">
+}

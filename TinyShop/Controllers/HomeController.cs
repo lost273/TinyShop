@@ -19,11 +19,18 @@ namespace TinyShop.Controllers {
 
             return View();
         }
-
+        [HttpGet]
         public ActionResult Сonfiguration () {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Сonfiguration page.";
 
             return View();
+        }
+        [HttpPost]
+        public ActionResult Сonfiguration (Product product) {
+            db.Products.Add(product);
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
         }
     }
 }
