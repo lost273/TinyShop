@@ -21,7 +21,7 @@ namespace TinyShop.Controllers {
         }
         [HttpGet]
         public ActionResult Сonfiguration () {
-            return View(db.Products);
+            return View(db.Products.ToList());
         }
         [HttpPost]
         public ActionResult Сonfiguration (Product product) {
@@ -31,9 +31,11 @@ namespace TinyShop.Controllers {
             return RedirectToAction("Сonfiguration");
         }
         [HttpPost]
-        public ActionResult ChangeProduct (List<Product> product) {
-            db.Entry(product).State = EntityState.Modified;
-            db.SaveChanges();
+        public ActionResult ChangeProduct (List<Product> productList) {
+            foreach (var product in productList) {
+                db.Entry(product).State = EntityState.Modified;
+                db.SaveChanges();
+            }
 
             return RedirectToAction("Сonfiguration");
         }

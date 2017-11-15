@@ -1,17 +1,17 @@
-﻿@model IEnumerable<TinyShop.Models.Product>
+﻿@model List<TinyShop.Models.Product>
 
-@*@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}*@
 <h2>Edit product</h2>
 
 @using (Html.BeginForm("ChangeProduct", "Home", FormMethod.Post)) {
     <label>Product name:</label>
     <div class="row">
         <div class="col-sm-4">
+            @{int i = 0;
+            }
             @foreach (var product in Model) {
-                <input type="hidden" name="ProductId" class="form-control" value="@product.ProductId">
-                <input type="text" name="Name" class="form-control" value="@product.Name">
+                <input type="hidden" name="productList[@i].ProductId" class="form-control" value="@product.ProductId">
+                <input type="text" name="productList[@i].Name" class="form-control" value="@product.Name">
+                i++;
             }
         </div>
     </div>
