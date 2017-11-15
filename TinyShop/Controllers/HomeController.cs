@@ -17,13 +17,13 @@ namespace TinyShop.Controllers {
         public ActionResult Diagram () {
             ViewBag.Message = "Your application description page.";
 
-            return View();
+            return View(db.Products);
         }
         [HttpGet]
         public ActionResult Сonfiguration () {
-            ViewBag.Message = "Сonfiguration page.";
+           
 
-            return View();
+            return View(db.Products);
         }
         [HttpPost]
         public ActionResult Сonfiguration (Product product) {

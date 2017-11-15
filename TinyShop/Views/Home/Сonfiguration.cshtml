@@ -1,39 +1,27 @@
-﻿@model TinyShop.Models.Product
+﻿@model IEnumerable<TinyShop.Models.Product>
 
-@{
+@*@{
     Layout = "~/Views/Shared/_Layout.cshtml";
-}
+}*@
 <h2>Edit product</h2>
-
-@foreach (string name in Model) {
-    <option value="@name">@name</option>
-}
-
 
 <div class="row">
     <div class="col-xs-4">
-        @foreach (var b in Model) {
-            <input type="text" class="form-control" value="@b.Name">
+        @foreach (var product in Model) {
+            <input type="text" class="form-control" value="@product.Name">
         }
     </div>
 </div>
 
-@using (Html.BeginForm()) {
-    @Html.LabelFor(model => model.Name, "Product name")
-    <br />
-    @Html.EditorFor(model => model.Name)
-    <br /><br />
-    <input class="btn btn-success" type="submit" value="Add">
-}
-
-
-
 <h2>Add new product</h2>
 
 @using (Html.BeginForm()) {
-    @Html.LabelFor(model => model.Name, "Product name")
-    <br />
-    @Html.EditorFor(model => model.Name)
+    <label>Product name:</label>
+    <div class="row">
+        <div class="col-xs-4">
+            <input type="text" class="form-control" placeholder="Enter the name...">
+        </div>
+    </div>
     <br /><br />
     <input class="btn btn-success" type="submit" value="Add">
 }
