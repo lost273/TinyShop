@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -15,14 +16,11 @@ namespace TinyShop.Controllers {
         }
 
         public ActionResult Diagram () {
-            ViewBag.Message = "Your application description page.";
-
-            return View(db.Products);
+            ViewBag.Message = "Diagram page.";
+            return View();
         }
         [HttpGet]
         public ActionResult Сonfiguration () {
-           
-
             return View(db.Products);
         }
         [HttpPost]
@@ -30,7 +28,14 @@ namespace TinyShop.Controllers {
             db.Products.Add(product);
             db.SaveChanges();
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Сonfiguration");
+        }
+        [HttpPost]
+        public ActionResult ChangeProduct (List<Product> product) {
+            db.Entry(product).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return RedirectToAction("Сonfiguration");
         }
     }
 }
