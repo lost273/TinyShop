@@ -13,7 +13,8 @@ namespace TinyShop.Controllers {
         OneDayContext db = new OneDayContext();
         public ActionResult Index () {
             ViewBag.Products = db.Products;
-            ViewBag.Time = DateTime.Now.Date.ToShortDateString();
+            ViewBag.Time = DateTime.Today.Date;
+            var dayConsumptions = db.Сonsumptions.Where(prod => prod.Date == DateTime.Today.Date);
             return View(db.Сonsumptions);
         }
 
