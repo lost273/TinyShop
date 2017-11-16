@@ -34,12 +34,14 @@ namespace TinyShop.Controllers {
         public ActionResult ChangeProduct (Product product, string action) {
             if (action == "change") {
                 db.Entry(product).State = EntityState.Modified;
+                db.SaveChanges();
             }
-            else if (action == "delete") {
+            if (action == "delete") {
                 Product p = db.Products.Find(product.ProductId);
                 db.Products.Remove(p);
+                db.SaveChanges();
             }
-            db.SaveChanges();
+            
             return RedirectToAction("Сonfiguration");
         }
     }
