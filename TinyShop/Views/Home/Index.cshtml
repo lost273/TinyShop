@@ -1,20 +1,39 @@
-﻿@{
+﻿@model IEnumerable<TinyShop.Models.Сonsumption>
+@{
     ViewBag.Title = "Home Page";
 }
 
+<!-- Generate new row-->
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="panel panel-default">
+            <div class="panel-heading clearfix">
+                <i class="icon-calendar"></i>
+                <h3 class="panel-title">@ViewBag.Time</h3>
+            </div>
+            <div class="panel-body">
+                <form class="form-inline" role="form">
+                    <div class="form-group">
+                        <select class="form-control">
+                            @foreach (var b in ViewBag.Products) {
+                                <option value="@b.Name">@b.Name</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="exampleInputPassword2" placeholder="q">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="exampleInputPassword2" placeholder="Cost">
+                    </div>
 
-
-<form class="form-inline">
-    <select class="form-control">
-        @foreach (var b in Model) {
-            <option value="@b.Name">@b.Name</option>
-
-        }
-    </select>
-    <input type="text" class="form-control" placeholder="q">
-    <input type="text" class="form-control" placeholder="cost">
-    <input type="text" class="form-control" placeholder="sum" readonly>
-</form>
-
-<input class="btn btn-success" type="button" value="Save">
-
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="exampleInputPassword2" placeholder="sum" readonly>
+                    </div>
+                    <br/>
+                    <input class="btn btn-success" type="button" value="Save">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -12,7 +12,9 @@ namespace TinyShop.Controllers {
     public class HomeController : Controller {
         OneDayContext db = new OneDayContext();
         public ActionResult Index () {
-            return View(db.Products);
+            ViewBag.Products = db.Products;
+            ViewBag.Time = DateTime.Now.Date.ToShortDateString();
+            return View(db.Сonsumptions);
         }
 
         public ActionResult Diagram () {
