@@ -2,23 +2,21 @@
 
 <h2>Edit product</h2>
 
-@using (Html.BeginForm("ChangeProduct", "Home", FormMethod.Post)) {
+
     <label>Product name:</label>
     <div class="row">
         <div class="col-sm-4">
-            @for (int i = 0; i < Model.Count; i++) {
-                <input type="hidden" name="productList[@i].ProductId" class="form-control" value="@Model[i].ProductId">
-                <input type="text" name="productList[@i].Name" class="form-control" value="@Model[i].Name">
-                <button type="button" class="btn btn-danger">Delete</button>
+            @foreach(var product in Model) {
+                @using (Html.BeginForm("ChangeProduct", "Home", FormMethod.Post)) {
+                    <input type="hidden" name="product.ProductId" class="form-control" value="@product.ProductId">
+                    <input type="text" name="product.Name" class="form-control" value="@product.Name">
+                    <button type="submit" class="btn btn-success" name="action" value="change">Change</button>
+                    <button type="button" class="btn btn-danger" name="action" value="delete">Delete</button>
+                }
             }
         </div>
     </div>
     <br/>
-    <input class="btn btn-success" type="submit" value="Change">
-}
-
-
-
 
 <h2>Add new product</h2>
 

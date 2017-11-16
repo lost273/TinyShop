@@ -31,12 +31,15 @@ namespace TinyShop.Controllers {
             return RedirectToAction("Сonfiguration");
         }
         [HttpPost]
-        public ActionResult ChangeProduct (List<Product> productList) {
-            foreach (var product in productList) {
+        public ActionResult ChangeProduct (Product product, string action) {
+            if (action == "change") {
                 db.Entry(product).State = EntityState.Modified;
-                db.SaveChanges();
             }
-
+            else if (action == "delete") {
+                Product p = db.Products.Find(product.ProductId);
+                db.Products.Remove(p);
+            }
+            db.SaveChanges();
             return RedirectToAction("Сonfiguration");
         }
     }
