@@ -15,9 +15,12 @@ namespace TinyShop.Controllers {
             ViewBag.Products = db.Products;
             ViewBag.Time = DateTime.Today.Date;
             DateTime dateRequest = new DateTime(year, month, day);
-            if (dateRequest == DateTime.MinValue) { }
-            var dayConsumptions = db.Сonsumptions.Where(prod => prod.Date == DateTime.Today.Date);
-            return View(db.Сonsumptions);
+            // if user went from main page
+            if (dateRequest == DateTime.MinValue) {
+                dateRequest = DateTime.Today;
+            }
+            var dayConsumptions = db.Сonsumptions.Where(prod => prod.Date == dateRequest);
+            return View(dayConsumptions);
         }
 
         public ActionResult Diagram () {
