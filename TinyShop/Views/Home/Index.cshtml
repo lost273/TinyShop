@@ -15,23 +15,34 @@
                 <form class="form-inline" role="form">
                     <div class="form-group">
                         <select class="form-control">
-                            @foreach (var b in ViewBag.Products) {
-                                <option value="@b.Name">@b.Name</option>
+                            @foreach (var product in ViewBag.Products) {
+                                <option value="@product.Name">@product.Name</option>
                             }
                         </select>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="exampleInputPassword2" placeholder="q">
+                        <input type="text" class="form-control" placeholder="q">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="exampleInputPassword2" placeholder="Cost">
+                        <input type="text" class="form-control" placeholder="Cost">
                     </div>
 
                     <div class="form-group">
-                        <input type="text" class="form-control" id="exampleInputPassword2" placeholder="sum" readonly>
+                        <input type="text" class="form-control" placeholder="sum" readonly>
                     </div>
                     <br/>
                     <input class="btn btn-success" type="button" value="Save">
+                    @foreach (var consumption in Model) {
+                        <div class="form-group">
+                            <input type="text" class="form-control" value="@consumption.Quantity">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="@consumption.Cost">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="@consumption.Quantity + @consumption.Cost" readonly>
+                        </div>
+                    }
                 </form>
             </div>
         </div>

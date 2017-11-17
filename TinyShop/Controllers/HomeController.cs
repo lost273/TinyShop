@@ -20,6 +20,9 @@ namespace TinyShop.Controllers {
                 dateRequest = DateTime.Today;
             }
             var dayConsumptions = db.Сonsumptions.Where(prod => prod.Date == dateRequest);
+            if (dayConsumptions == null) {
+                return View(new Сonsumption { Name = "", Quantity = 0, Cost = 0 });
+            }
             return View(dayConsumptions);
         }
 
