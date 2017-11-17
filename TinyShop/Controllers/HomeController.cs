@@ -11,7 +11,7 @@ namespace TinyShop.Controllers {
     [MyAuth]
     public class HomeController : Controller {
         OneDayContext db = new OneDayContext();
-        public ActionResult Index () {
+        public ActionResult Index (DateTime currentDate) {
             ViewBag.Products = db.Products;
             ViewBag.Time = DateTime.Today.Date;
             var dayConsumptions = db.Сonsumptions.Where(prod => prod.Date == DateTime.Today.Date);
