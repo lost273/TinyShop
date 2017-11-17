@@ -32,7 +32,14 @@
                     </div>
                     <br/>
                     <input class="btn btn-success" type="button" value="Save">
-                    @foreach (var consumption in Model) {
+
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" value="@Model.Quantity">
+                    </div>
+
+
+                    @*@foreach (var consumption in Model) {
                         <div class="form-group">
                             <input type="text" class="form-control" value="@consumption.Quantity">
                         </div>
@@ -42,7 +49,7 @@
                         <div class="form-group">
                             <input type="text" class="form-control" placeholder="@consumption.Quantity + @consumption.Cost" readonly>
                         </div>
-                    }
+                    }*@
                 </form>
             </div>
         </div>
