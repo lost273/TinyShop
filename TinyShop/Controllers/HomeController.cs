@@ -11,6 +11,7 @@ namespace TinyShop.Controllers {
     [MyAuth]
     public class HomeController : Controller {
         OneDayContext db = new OneDayContext();
+        [HttpGet]
         public ActionResult Index (int year = 1, int month = 1, int day = 1) {
             ViewBag.Products = db.Products;
             ViewBag.Time = DateTime.Today.Date;
@@ -27,7 +28,12 @@ namespace TinyShop.Controllers {
             //}
             //return View(dayConsumptions);
         }
-
+        [HttpPost]
+        public ActionResult Index(Row row) {
+            db.Rows.Add(row);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
         public ActionResult Diagram () {
             ViewBag.Message = "Diagram page.";
             return View();
@@ -56,6 +62,20 @@ namespace TinyShop.Controllers {
             }
             
             return RedirectToAction("Сonfiguration");
+        }
+        [HttpPost]
+        public ActionResult ChangeRow(Row row, string action) {
+            if (action == "change") {
+                db.Entry(row).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            if (action == "delete") {
+                Row p = db.Rows.Find(row.RowId);
+                db.Rows.Remove(p);
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("Index");
         }
     }
 }
