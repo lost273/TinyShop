@@ -14,6 +14,16 @@ namespace TinyShop.Models {
         public int Quantity { get; set; }
         public decimal Cost { get; set; }
     }
+
+    public class Row {
+        [Key]
+        public int RowId { get; set; }
+        public DateTime Date { get; set; }
+        public string Name { get; set; }
+        public int Quantity { get; set; }
+        public decimal Cost { get; set; }
+    }
+
     public class Product{
         [Key]
         public int ProductId { get; set; }
@@ -24,5 +34,6 @@ namespace TinyShop.Models {
         public OneDayContext () : base("DefaultConnection")  { }
         public DbSet<Сonsumption> Сonsumptions { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Row> Rows { get; set; }
     }
 }

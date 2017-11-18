@@ -1,4 +1,4 @@
-﻿@model List<TinyShop.Models.Сonsumption>
+﻿@model List<TinyShop.Models.Row>
 @{
     ViewBag.Title = "Home Page";
 }
@@ -35,15 +35,15 @@
 
 
 
-                    @foreach (var c in Model) {
+                    @foreach (var row in Model) {
                         <div class="form-group">
-                            <input type="text" class="form-control" value="@c.Quantity">
+                            <input type="text" class="form-control" value="@row.Quantity">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" value="@c.Cost">
+                            <input type="text" class="form-control" value="@row.Cost">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" value="@c.Quantity + @c.Cost" readonly>
+                            <input type="text" class="form-control" value="@row.Quantity + @row.Cost" readonly>
                         </div>
                     }
                 </form>
