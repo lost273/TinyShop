@@ -29,14 +29,14 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <input type="text" name="row.Quantity" class="form-control" value="@row.Quantity">
+                        <input type="number" min="1" step="1" name="row.Quantity" class="form-control" value="@row.Quantity">
                     </div>
                     <div class="form-group">
                         <input type="number" min=".01" step=".01" name="row.Cost" class="form-control" value="@row.Cost">
                     </div>
 
                     <div class="form-group">
-                        <input type="text" name="row.Total" class="form-control" value="@row.Total" readonly>
+                        <input type="number" min=".01" step=".01" name="row.Total" class="form-control" value="@row.Total" readonly>
                     </div>
                     <span class="input-group-btn">
                         <button type="submit" class="btn btn-success" name="action" value="change">Change</button>
@@ -97,9 +97,9 @@
                         <option value="@product.Name">@product.Name</option>
                     }
                 </select>
-                <input type="text" name="row.Quantity" class="form-control">
-                <input type="text" name="row.Cost" class="form-control">
-                <input type="text" name="row.Total" class="form-control">
+                <input type="number" min="1" step="1" name="row.Quantity" class="form-control">
+                <input type="number" min=".01" step=".01" name="row.Cost" class="form-control">
+                <input type="number" min=".01" step=".01" name="row.Total" class="form-control">
                 <span class="input-group-btn">
                     <button type="submit" class="btn btn-success" value="Add">Add</button>
                 </span>
