@@ -12,44 +12,38 @@
                 <h3 class="panel-title">@ViewBag.Time</h3>
             </div>
             <div class="panel-body">
-                <form class="form-inline" role="form">
+            @foreach (var row in Model) {
+                <form class="form-inline" role="form" action="/Home/ChangeRow" method="post">
                     <div class="form-group">
-                        <select class="form-control">
+                        <input type="hidden" name="row.RowId" class="form-control" value="@row.RowId">
+                        <input type="hidden" name="row.Date" class="form-control" value="@row.Date">
+                        <select name="row.Name" class="form-control" selected="@row.Name">
                             @foreach (var product in ViewBag.Products) {
-                                <option value="@product.Name">@product.Name</option>
+                                if (product.Name == row.Name) {
+                                    <option value="@product.Name" selected="selected">@product.Name</option>
+                                }
+                                else {
+                                    <option value="@product.Name">@product.Name</option>
+                                }
                             }
                         </select>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="q">
+                        <input type="text" name="row.Quantity" class="form-control" value="@row.Quantity">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Cost">
+                        <input type="number" min=".01" step=".01" name="row.Cost" class="form-control" value="@row.Cost">
                     </div>
 
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="sum" readonly>
+                        <input type="text" name="row.Total" class="form-control" value="@row.Total" readonly>
                     </div>
-                    <br/>
-
-                    @foreach (var row in Model) {
-
-                        <input type="hidden" name="product.ProductId" class="form-control" value="@row.RowId">
-
-
-                        <div class="form-group">
-                            <input type="text" class="form-control" value="@row.Quantity">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" value="@row.Cost">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" value="@row.Quantity + @row.Cost" readonly>
-                        </div>
-                    }
-                    <input class="btn btn-success" type="button" value="Save">
-
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-success" name="action" value="change">Change</button>
+                        <button type="submit" class="btn btn-danger" name="action" value="delete">Delete</button>
+                    </span>
                 </form>
+            }
             </div>
         </div>
     </div>
@@ -61,19 +55,29 @@
 <div class="row">
     <div class="col-sm-4">
         @foreach (var row in Model) {
-                using (Html.BeginForm("ChangeRow", "Home", FormMethod.Post)) {
+            using (Html.BeginForm("ChangeRow", "Home", FormMethod.Post)) {
                 <div class="input-group">
                     <input type="hidden" name="row.RowId" class="form-control" value="@row.RowId">
-                    <input type="hidden" name="row.Date" class="form-control" value="@row.Date">
-                    <input type="text" name="row.Name" class="form-control" value="@row.Name">
-                    <input type="text" name="row.Quantity" class="form-control" value="@row.Quantity">
-                    <input type="text" name="row.Cost" class="form-control" value="@row.Cost">
-                    <input type="text" name="row.Total" class="form-control" value="@row.Total">
-                    <span class="input-group-btn">
-                        <button type="submit" class="btn btn-success" name="action" value="change">Change</button>
-                        <button type="submit" class="btn btn-danger" name="action" value="delete">Delete</button>
-                    </span>
                 </div>
+                <div class="input-group">
+                    <input type="hidden" name="row.Date" class="form-control" value="@row.Date">
+                </div>
+                <div class="input-group">
+                    <input type="text" name="row.Name" class="form-control" value="@row.Name">
+                </div>
+                <div class="input-group">
+                    <input type="text" name="row.Quantity" class="form-control" value="@row.Quantity">
+                </div>
+                <div class="input-group">
+                    <input type="text" name="row.Cost" class="form-control" value="@row.Cost">
+                </div>
+                <div class="input-group">
+                    <input type="text" name="row.Total" class="form-control" value="@row.Total">
+                </div>
+                <span class="input-group-btn">
+                <button type="submit" class="btn btn-success" name="action" value="change">Change</button>
+                <button type="submit" class="btn btn-danger" name="action" value="delete">Delete</button>
+                </span>
             }
         }
     </div>
