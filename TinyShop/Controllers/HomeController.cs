@@ -19,12 +19,13 @@ namespace TinyShop.Controllers {
             if (dateRequest == DateTime.MinValue) {
                 dateRequest = DateTime.Today;
             }
-            var dayConsumptions = db.Сonsumptions.Where(prod => prod.Date == dateRequest).ToList();
+            return View(db.Сonsumptions.ToList());
+            //var dayConsumptions = db.Сonsumptions.Where(prod => prod.Date == dateRequest).ToList();
            
-            if (dayConsumptions == null) {
-                return View(new Сonsumption { Name = "", Quantity = 0, Cost = 0 });
-            }
-            return View(dayConsumptions);
+            //if (dayConsumptions == null) {
+            //    return View(new Сonsumption { Name = "", Quantity = 0, Cost = 0 });
+            //}
+            //return View(dayConsumptions);
         }
 
         public ActionResult Diagram () {
