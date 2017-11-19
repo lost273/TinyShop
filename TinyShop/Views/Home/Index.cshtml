@@ -9,7 +9,7 @@
         <div class="panel panel-default">
             <div class="panel-heading clearfix">
                 <i class="icon-calendar"></i>
-                <h3 class="panel-title">@ViewBag.Time</h3>
+                <h3 class="panel-title">@ViewBag.Time.ToLongDateString()</h3>
             </div>
             <div class="panel-body">
             @foreach (var row in Model) {
@@ -32,11 +32,11 @@
                         <input type="number" min="1" step="1" name="row.Quantity" class="form-control" value="@row.Quantity">
                     </div>
                     <div class="form-group">
-                        <input type="number" min=".01" step=".01" name="row.Cost" class="form-control" value="@row.Cost">
+                        <input type="text" name="row.Cost" class="form-control" value="@row.Cost">
                     </div>
 
                     <div class="form-group">
-                        <input type="number" min=".01" step=".01" name="row.Total" class="form-control" value="@row.Total" readonly>
+                        <input type="text" name="row.Total" class="form-control" value="@row.Total" readonly>
                     </div>
                     <span class="input-group-btn">
                         <button type="submit" class="btn btn-success" name="action" value="change">Change</button>
@@ -50,60 +50,35 @@
 </div>
 
 
-<h2>Edit or delete product:</h2>
-
-<div class="row">
-    <div class="col-sm-4">
-        @foreach (var row in Model) {
-            using (Html.BeginForm("ChangeRow", "Home", FormMethod.Post)) {
-                <div class="input-group">
-                    <input type="hidden" name="row.RowId" class="form-control" value="@row.RowId">
-                </div>
-                <div class="input-group">
-                    <input type="hidden" name="row.Date" class="form-control" value="@row.Date">
-                </div>
-                <div class="input-group">
-                    <input type="text" name="row.Name" class="form-control" value="@row.Name">
-                </div>
-                <div class="input-group">
-                    <input type="text" name="row.Quantity" class="form-control" value="@row.Quantity">
-                </div>
-                <div class="input-group">
-                    <input type="text" name="row.Cost" class="form-control" value="@row.Cost">
-                </div>
-                <div class="input-group">
-                    <input type="text" name="row.Total" class="form-control" value="@row.Total">
-                </div>
-                <span class="input-group-btn">
-                <button type="submit" class="btn btn-success" name="action" value="change">Change</button>
-                <button type="submit" class="btn btn-danger" name="action" value="delete">Delete</button>
-                </span>
-            }
-        }
-    </div>
-</div>
-<br />
-
 <h2>Add new product:</h2>
 
-@using (Html.BeginForm("Index", "Home", FormMethod.Post)) {
+
     <label>Product name:</label>
     <div class="row">
-        <div class="col-sm-4">
-            <div class="input-group">
-                <input type="hidden" name="row.Date" class="form-control" value="@DateTime.Today.Date">
-                <select name="row.Name" class="form-control">
-                    @foreach (var product in ViewBag.Products) {
-                        <option value="@product.Name">@product.Name</option>
-                    }
-                </select>
-                <input type="number" min="1" step="1" name="row.Quantity" class="form-control">
-                <input type="number" min=".01" step=".01" name="row.Cost" class="form-control">
-                <input type="number" min=".01" step=".01" name="row.Total" class="form-control">
-                <span class="input-group-btn">
-                    <button type="submit" class="btn btn-success" value="Add">Add</button>
-                </span>
-            </div>
-        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <form class="form-inline" role="form" action="/Home/Index" method="post">
+                <div class="form-group">
+                    <input type="hidden" name="row.Date" class="form-control" value="@DateTime.Today.Date">
+                    <select name="row.Name" class="form-control">
+                        @foreach (var product in ViewBag.Products) {
+                            <option value="@product.Name">@product.Name</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="number" min="1" step="1" name="row.Quantity" class="form-control">
+                </div>
+                <div class="form-group">
+                    <input type="text" name="row.Cost" class="form-control">
+                </div>
+                <div class="form-group">
+                    <input type="text" name="row.Total" class="form-control" readonly>
+                </div>
+                <div class="form-group">
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-success" value="Add">Add</button>
+                    </span>
+                </div>
+</div>
     </div>
-}
+</form>
