@@ -91,3 +91,23 @@
     </div>
 </div>
 
+
+
+
+<!--   code -->
+$(document).ready(function () {
+     $('.form-control').on('change', function(){
+        var value = $(this).val();
+        $(this).val((value).toFixed(2));
+        $('#total').val('0');
+
+        $('.form-control').each(function(){
+            if(!isNaN(parseFloat($(this).val()))){
+                $('#total').val((parseFloat($('#total').val()) + parseFloat($(this).val())).toFixed(2));
+            }
+        });
+    });
+
+});
+
+http://jsfiddle.net/5wbhnmwd/
