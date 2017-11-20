@@ -25,19 +25,12 @@ namespace TinyShop.Controllers {
             }
             var currentDay = db.Rows.Where(row => row.Date == dateRequest).ToList();
             return View(currentDay);
-
-            //var dayConsumptions = db.Сonsumptions.Where(prod => prod.Date == dateRequest).ToList();
-
-            //if (dayConsumptions == null) {
-            //    return View(new Сonsumption { Name = "", Quantity = 0, Cost = 0 });
-            //}
-            //return View(dayConsumptions);
         }
         [HttpPost]
         public ActionResult Index(Row row) {
             db.Rows.Add(row);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Home", new { year = row.Date.Year, month = row.Date.Month, day = row.Date.Day });
         }
         public ActionResult Diagram () {
             ViewBag.Message = "Diagram page.";
@@ -80,17 +73,18 @@ namespace TinyShop.Controllers {
                 db.SaveChanges();
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Home", new { year = row.Date.Year, month = row.Date.Month, day = row.Date.Day });
         }
         [HttpPost]
-        public ActionResult BackInTime (DateTime currentTime, string action) {
+        public ActionResult BackInTime (DateTime currentDate, string action) {
+            DateTime newDate = new DateTime();
             if (action == "back") {
-                currentTime.AddDays(-1);
+                newDate = currentDate.AddDays(-1);
             }
             if (action == "forward") {
-                currentTime.AddDays(1);
+                newDate = currentDate.AddDays(1);
             }
-            return RedirectToAction("Index", "Home", new { year = currentTime.Year, month = currentTime.Month, day = currentTime.Day });
+            return RedirectToAction("Index", "Home", new { year = newDate.Year, month = newDate.Month, day = newDate.Day });
         }
     }
 }
