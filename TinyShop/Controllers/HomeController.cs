@@ -14,11 +14,14 @@ namespace TinyShop.Controllers {
         [HttpGet]
         public ActionResult Index (int year = 1, int month = 1, int day = 1) {
             ViewBag.Products = db.Products;
-            ViewBag.Time = DateTime.Today.Date;
             DateTime dateRequest = new DateTime(year, month, day);
-            // if user went from main page
+            // if user went from the main page
             if (dateRequest == DateTime.MinValue) {
                 dateRequest = DateTime.Today;
+                ViewBag.Time = DateTime.Today.Date;
+            }
+            else {
+                ViewBag.Time = dateRequest.Date;
             }
             var currentDay = db.Rows.Where(row => row.Date == dateRequest).ToList();
             return View(currentDay);
@@ -78,6 +81,16 @@ namespace TinyShop.Controllers {
             }
 
             return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public ActionResult BackInTime (DateTime currentTime, string action) {
+            if (action == "back") {
+                currentTime.AddDays(-1);
+            }
+            if (action == "forward") {
+                currentTime.AddDays(1);
+            }
+            return RedirectToAction("Index", "Home", new { year = currentTime.Year, month = currentTime.Month, day = currentTime.Day });
         }
     }
 }

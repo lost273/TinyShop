@@ -9,15 +9,18 @@
             <div class="panel-heading clearfix">
                 <i class="icon-calendar"></i>
                 @*<h3 class="panel-title"></h3>*@
+                <form class="form-inline" role="form" action="/Home/BackInTime" method="post">
+                    <input type="hidden" name="currentTime" class="form-control" value="@ViewBag.Time">
                     <div class="btn-group">
-                        <a class="btn btn btn-primary" role="button" href="index">Левая</a>
+                        <button type="submit" class="btn btn-primary" name="action" value="back">Back</button>
                     </div>
                     <div class="btn-group">
                         <button type="button" class="btn btn-default">@ViewBag.Time.ToLongDateString()</button>
                     </div>
                     <div class="btn-group">
-                        <button type="button" class="btn btn-primary">Правая</button>
+                        <button type="submit" class="btn btn-primary" name="action" value="forward">Forward</button>
                     </div>
+                </form>
             </div>
             <div class="panel-body">
             @foreach (var row in Model) {
