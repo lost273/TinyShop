@@ -28,6 +28,7 @@ namespace TinyShop.Controllers {
         }
         [HttpPost]
         public ActionResult Index(Row row) {
+            row.Total = row.Quantity * row.Cost;
             db.Rows.Add(row);
             db.SaveChanges();
             return RedirectToAction("Index", "Home", new { year = row.Date.Year, month = row.Date.Month, day = row.Date.Day });
@@ -64,6 +65,7 @@ namespace TinyShop.Controllers {
         [HttpPost]
         public ActionResult ChangeRow(Row row, string action) {
             if (action == "change") {
+                row.Total = row.Quantity * row.Cost;
                 db.Entry(row).State = EntityState.Modified;
                 db.SaveChanges();
             }
