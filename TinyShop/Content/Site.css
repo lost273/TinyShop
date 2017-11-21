@@ -24,3 +24,11 @@ select,
 textarea {
     max-width: 280px;
 }
+
+#chart_container {
+    width: 400px;
+    height:400px;
+    border:1px solid #ddd;
+    padding: 1px;
+    border-radius: 4px;
+}
