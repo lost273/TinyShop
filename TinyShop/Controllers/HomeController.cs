@@ -14,6 +14,7 @@ namespace TinyShop.Controllers {
         [HttpGet]
         public ActionResult Index (int year = 1, int month = 1, int day = 1) {
             ViewBag.Products = db.Products;
+            ViewBag.Total = 0;
             DateTime dateRequest = new DateTime(year, month, day);
             // if user went from the main page
             if (dateRequest == DateTime.MinValue) {
