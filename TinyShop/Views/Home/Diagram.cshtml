@@ -4,4 +4,11 @@
 <h2>@ViewBag.Title.</h2>
 <h3>@ViewBag.Message</h3>
 
-<img src="Chart.cshtml"/>
+<div id="chart_container">
+    <canvas id="bar_chart"></canvas>
+
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/scripts/Chart.js")
+}
