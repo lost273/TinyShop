@@ -34,10 +34,10 @@ namespace TinyShop.Controllers {
             db.SaveChanges();
             return RedirectToAction("Index", "Home", new { year = row.Date.Year, month = row.Date.Month, day = row.Date.Day });
         }
-        public ActionResult Diagram () {
-            DateTime dateRequest = new DateTime(2017, 11, 20);
+        public ActionResult Diagram (int yearOne = 1, int monthOne = 1) {
+            DateTime dateRequest = new DateTime(yearOne, monthOne, 01);
             List<decimal> total = new List<decimal>();
-            var rows = db.Rows.Where(row => row.Date == dateRequest).ToList();
+            var rows = db.Rows.Where(row => row.Date.Month == dateRequest.Month).ToList();
             var names = rows.Select(n => n.Name).Distinct();
             foreach (var name in names) {
                 decimal totalCount = 0;
