@@ -3,10 +3,12 @@
 }
 <h2>@ViewBag.Title.</h2>
 <h3>@ViewBag.Message</h3>
-
+<script>
+    var namesArray = @Html.Raw(Json.Encode(ViewBag.NAMES));
+    var totalArray = @Html.Raw(Json.Encode(ViewBag.TOTAL));
+</script>
 <div id="chart_container">
     <canvas id="bar_chart"></canvas>
-    <canvas id="myChart" width="10" height="10"></canvas>
 </div>
 
 

@@ -41,8 +41,16 @@ namespace TinyShop.Controllers {
             var rows = db.Rows.Where(row => row.Date == dateRequest).ToList();
             var names = rows.Select(n => n.Name).Distinct();
             foreach (var name in names) {
-                total.Add();
+                decimal totalCount = 0;
+                foreach (var row in rows) {
+                    if (name == row.Name) {
+                        totalCount += row.Total;
+                    }
+                }
+                total.Add(totalCount);
             }
+            ViewBag.NAMES = names;
+            ViewBag.TOTAL = total.ToList();
             return View();
         }
         [HttpGet]

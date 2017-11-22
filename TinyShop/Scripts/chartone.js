@@ -1,11 +1,12 @@
-﻿var ctx = document.getElementById("myChart").getContext('2d');
+﻿//var ctx = document.getElementById("bar_chart").getContext('2d');
+var ctx = $("#bar_chart");
 var myChart = new Chart(ctx, {
     type: 'horizontalBar',
     data: {
-        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+        labels: namesArray,//["Red", "Blue", "Yellow", "Green", "Purple", "Orange"]
         datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
+            label: 'simple label',
+            data: totalArray,//[12, 19, 3, 5, 2, 3]
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -26,12 +27,14 @@ var myChart = new Chart(ctx, {
         }]
     },
     options: {
+        maintainAspectRatio: false,
         scales: {
             yAxes: [{
                 ticks: {
                     beginAtZero:true
                 }
             }]
-        }
+        },
+        legend: {display: false}
     }
 });
