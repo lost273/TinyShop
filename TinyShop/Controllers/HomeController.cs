@@ -36,7 +36,6 @@ namespace TinyShop.Controllers {
         }
         public ActionResult Diagram () {
             DateTime dateRequest = new DateTime(2017, 11, 20);
-            
             List<decimal> total = new List<decimal>();
             var rows = db.Rows.Where(row => row.Date == dateRequest).ToList();
             var names = rows.Select(n => n.Name).Distinct();
