@@ -35,7 +35,14 @@ namespace TinyShop.Controllers {
             return RedirectToAction("Index", "Home", new { year = row.Date.Year, month = row.Date.Month, day = row.Date.Day });
         }
         public ActionResult Diagram () {
-            ViewBag.Message = "Diagram page.";
+            DateTime dateRequest = new DateTime(2017, 11, 20);
+            
+            List<decimal> total = new List<decimal>();
+            var rows = db.Rows.Where(row => row.Date == dateRequest).ToList();
+            var names = rows.Select(n => n.Name).Distinct();
+            foreach (var name in names) {
+                total.Add();
+            }
             return View();
         }
         [HttpGet]
