@@ -38,7 +38,6 @@ namespace TinyShop.Controllers {
             DateTime dateRequestOne = new DateTime(yearOne, monthOne, 01);
             DateTime dateRequestTwo = new DateTime(yearTwo, monthTwo, 01);
             ChartInfo chart = new ChartInfo();
-            int namesCount;
 
             List<Row> rowsOne = db.Rows.Where(row => row.Date.Month == dateRequestOne.Month).ToList();
             List<Row> rowsTwo = db.Rows.Where(row => row.Date.Month == dateRequestTwo.Month).ToList();
@@ -50,14 +49,10 @@ namespace TinyShop.Controllers {
             chart.ChartTotalTwo = FillTheChart(rowsTwo, chart.ChartNamesTwo);
 
             if (chart.ChartNamesOne.Count >= chart.ChartNamesTwo.Count) {
-                namesCount = chart.ChartNamesOne.Count;
+                dataMerge(chart.ChartNamesOne, chart.ChartNamesTwo, chart.ChartTotalOne, chart.ChartTotalTwo);
             }
             else {
-                namesCount = chart.ChartNamesTwo.Count;
-            }
-
-            for (int i = 0; i < namesCount; i++) {
-                
+                dataMerge(chart.ChartNamesTwo, chart.ChartNamesOne, chart.ChartTotalTwo, chart.ChartTotalOne);
             }
 
             return View(chart);
@@ -125,6 +120,10 @@ namespace TinyShop.Controllers {
                 totalList.Add(totalCount);
             }
             return totalList;
+        }
+
+        private void dataMerge (List<string> longString, List<string> shortString, List<decimal> longNumber, List<decimal> shortNumber) {
+            
         }
     }
 }
