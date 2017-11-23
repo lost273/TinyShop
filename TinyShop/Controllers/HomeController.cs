@@ -39,19 +39,14 @@ namespace TinyShop.Controllers {
             DateTime dateRequestTwo = new DateTime(yearTwo, monthTwo, 01);
             ChartInfo chart = new ChartInfo();
 
-            var rows = db.Rows.Where(row => row.Date.Month == dateRequestOne.Month).ToList();
-            chart.ChartNamesOne = rows.Select(n => n.Name).Distinct().ToList();
+            List<Row> rowsOne = db.Rows.Where(row => row.Date.Month == dateRequestOne.Month).ToList();
+            List<Row> rowsTwo = db.Rows.Where(row => row.Date.Month == dateRequestTwo.Month).ToList();
             chart.Years = db.Rows.Select(r => r.Date.Year).Distinct().ToList();
             chart.Months = db.Rows.Select(r => r.Date.Month).Distinct().ToList();
-            foreach (var name in chart.ChartNamesOne) {
-                decimal totalCount = 0;
-                foreach (var row in rows) {
-                    if (name == row.Name) {
-                        totalCount += row.Total;
-                    }
-                }
-                chart.ChartTotalOne.Add(totalCount);
-            }
+            chart.ChartNamesOne = rowsOne.Select(n => n.Name).Distinct().ToList();
+            chart.ChartNamesTwo = rowsTwo.Select(n => n.Name).Distinct().ToList();
+            chart.ChartTotalOne = FillTheChart(rowsOne, chart.ChartNamesOne);
+            chart.ChartTotalTwo = FillTheChart(rowsTwo, chart.ChartNamesTwo);
 
             return View(chart);
         }
@@ -105,6 +100,19 @@ namespace TinyShop.Controllers {
                 newDate = currentDate.AddDays(1);
             }
             return RedirectToAction("Index", "Home", new { year = newDate.Year, month = newDate.Month, day = newDate.Day });
+        }
+        private List<decimal> FillTheChart (List<Row> rows, List<string> names) {
+            List<decimal> totalList = new List<decimal>();
+            foreach (var name in names) {
+                decimal totalCount = 0;
+                foreach (var row in rows) {
+                    if (name == row.Name) {
+                        totalCount += row.Total;
+                    }
+                }
+                totalList.Add(totalCount);
+            }
+            return totalList;
         }
     }
 }

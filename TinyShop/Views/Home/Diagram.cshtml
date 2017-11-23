@@ -1,7 +1,9 @@
 ﻿@model TinyShop.Models.ChartInfo
 <script>
-    var namesArray = @Html.Raw(Json.Encode(Model.ChartNamesOne));
-    var totalArray = @Html.Raw(Json.Encode(Model.ChartTotalOne));
+    var namesArrayOne = @Html.Raw(Json.Encode(Model.ChartNamesOne));
+    var totalArrayOne = @Html.Raw(Json.Encode(Model.ChartTotalOne));
+    var namesArrayTwo = @Html.Raw(Json.Encode(Model.ChartNamesTwo));
+    var totalArrayTwo = @Html.Raw(Json.Encode(Model.ChartTotalTwo));
 </script>
 
 <div class="row">

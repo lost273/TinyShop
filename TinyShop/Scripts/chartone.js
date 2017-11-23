@@ -3,11 +3,11 @@ var ctx = $("#bar_chart");
 var myChart = new Chart(ctx, {
     type: 'horizontalBar',
     data: {
-        labels: namesArray,//for test ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"]
+        labels: namesArrayOne,//for test ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"]
         datasets: [
             {
-                label: 'first label',
-                data: totalArray,//for test [12, 19, 3, 5, 2, 3]
+                label: 'Period №1',
+                data: totalArrayOne,//for test [12, 19, 3, 5, 2, 3]
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
@@ -27,8 +27,8 @@ var myChart = new Chart(ctx, {
                 borderWidth: 1
             },
             {
-                label: 'second label',
-                data: totalArray,//for test [12, 19, 3, 5, 2, 3]
+                label: 'Period №2',
+                data: totalArrayTwo,//for test [12, 19, 3, 5, 2, 3]
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
