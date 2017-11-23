@@ -22,6 +22,14 @@ namespace TinyShop.Models {
         public int ProductId { get; set; }
         public string Name { get; set; }
     }
+    public class ChartInfo {
+        public List<decimal> ChartTotalOne { get; set; }
+        public List<string> ChartNamesOne { get; set; }
+        public List<decimal> ChartTotalTwo { get; set; }
+        public List<string> ChartNamesTwo { get; set; }
+        public List<int> Years { get; set; }
+        public List<int> Months { get; set; }
+    }
     public class OneDayContext : DbContext {
         public OneDayContext () : base("DefaultConnection")  { }
         public DbSet<Product> Products { get; set; }

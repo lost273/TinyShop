@@ -34,23 +34,26 @@ namespace TinyShop.Controllers {
             db.SaveChanges();
             return RedirectToAction("Index", "Home", new { year = row.Date.Year, month = row.Date.Month, day = row.Date.Day });
         }
-        public ActionResult Diagram (int yearOne = 1, int monthOne = 1) {
-            DateTime dateRequest = new DateTime(yearOne, monthOne, 01);
-            List<decimal> total = new List<decimal>();
-            var rows = db.Rows.Where(row => row.Date.Month == dateRequest.Month).ToList();
-            var names = rows.Select(n => n.Name).Distinct();
-            foreach (var name in names) {
+        public ActionResult Diagram (int yearOne = 1, int monthOne = 1, int yearTwo = 1, int monthTwo = 1) {
+            DateTime dateRequestOne = new DateTime(yearOne, monthOne, 01);
+            DateTime dateRequestTwo = new DateTime(yearTwo, monthTwo, 01);
+            ChartInfo chart = new ChartInfo();
+
+            var rows = db.Rows.Where(row => row.Date.Month == dateRequestOne.Month).ToList();
+            chart.ChartNamesOne = rows.Select(n => n.Name).Distinct().ToList();
+            chart.Years = db.Rows.Select(r => r.Date.Year).Distinct().ToList();
+            chart.Months = db.Rows.Select(r => r.Date.Month).Distinct().ToList();
+            foreach (var name in chart.ChartNamesOne) {
                 decimal totalCount = 0;
                 foreach (var row in rows) {
                     if (name == row.Name) {
                         totalCount += row.Total;
                     }
                 }
-                total.Add(totalCount);
+                chart.ChartTotalOne.Add(totalCount);
             }
-            ViewBag.NAMES = names;
-            ViewBag.TOTAL = total.ToList();
-            return View();
+
+            return View(chart);
         }
         [HttpGet]
         public ActionResult Сonfiguration () {
