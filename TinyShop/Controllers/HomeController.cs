@@ -38,6 +38,7 @@ namespace TinyShop.Controllers {
             DateTime dateRequestOne = new DateTime(yearOne, monthOne, 01);
             DateTime dateRequestTwo = new DateTime(yearTwo, monthTwo, 01);
             ChartInfo chart = new ChartInfo();
+            int namesCount;
 
             List<Row> rowsOne = db.Rows.Where(row => row.Date.Month == dateRequestOne.Month).ToList();
             List<Row> rowsTwo = db.Rows.Where(row => row.Date.Month == dateRequestTwo.Month).ToList();
@@ -48,12 +49,15 @@ namespace TinyShop.Controllers {
             chart.ChartTotalOne = FillTheChart(rowsOne, chart.ChartNamesOne);
             chart.ChartTotalTwo = FillTheChart(rowsTwo, chart.ChartNamesTwo);
 
-            for (int i = 0; i < chart.ChartNamesOne.Count; i++) {
-                for (int j = 0; j < chart.ChartNamesTwo.Count; j++) {
-                    if (chart.ChartNamesOne[i] == chart.ChartNamesTwo[j]) {
-                        break;
-                    }
-                }
+            if (chart.ChartNamesOne.Count >= chart.ChartNamesTwo.Count) {
+                namesCount = chart.ChartNamesOne.Count;
+            }
+            else {
+                namesCount = chart.ChartNamesTwo.Count;
+            }
+
+            for (int i = 0; i < namesCount; i++) {
+                
             }
 
             return View(chart);
