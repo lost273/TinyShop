@@ -48,6 +48,14 @@ namespace TinyShop.Controllers {
             chart.ChartTotalOne = FillTheChart(rowsOne, chart.ChartNamesOne);
             chart.ChartTotalTwo = FillTheChart(rowsTwo, chart.ChartNamesTwo);
 
+            for (int i = 0; i < chart.ChartNamesOne.Count; i++) {
+                for (int j = 0; j < chart.ChartNamesTwo.Count; j++) {
+                    if (chart.ChartNamesOne[i] == chart.ChartNamesTwo[j]) {
+                        break;
+                    }
+                }
+            }
+
             return View(chart);
         }
         [HttpGet]
