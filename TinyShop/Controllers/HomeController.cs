@@ -58,6 +58,8 @@ namespace TinyShop.Controllers {
             chartCommon.Years = db.Rows.Select(r => r.Date.Year).Distinct().ToList();
             chartCommon.Months = db.Rows.Select(r => r.Date.Month).Distinct().ToList();
 
+            ViewBag.dateRequest = $"{dateRequestOne.Month}.{dateRequestOne.Year} - {dateRequestTwo.Month}.{dateRequestTwo.Year}";
+
             return View(chartCommon);
         }
         [HttpGet]

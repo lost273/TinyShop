@@ -50,6 +50,10 @@ var myChart = new Chart(ctx, {
         ]
     },
     options: {
+        title: {
+            display: true,
+            text: infoString
+        },
         maintainAspectRatio: false,
         scales: {
             yAxes: [{
@@ -58,10 +62,6 @@ var myChart = new Chart(ctx, {
                 }
             }]
         },
-        legend: { display: false },
-        title: {
-            display: true,
-            text: 'Chart.js Horizontal Bar Chart'
-        }
+        legend: { display: false }
     }
 });
