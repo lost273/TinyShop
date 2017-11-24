@@ -42,8 +42,7 @@ namespace TinyShop.Controllers {
 
             List<Row> rowsOne = db.Rows.Where(row => row.Date.Month == dateRequestOne.Month).ToList();
             List<Row> rowsTwo = db.Rows.Where(row => row.Date.Month == dateRequestTwo.Month).ToList();
-            chart.Years = db.Rows.Select(r => r.Date.Year).Distinct().ToList();
-            chart.Months = db.Rows.Select(r => r.Date.Month).Distinct().ToList();
+            
             chart.ChartNamesOne = rowsOne.Select(n => n.Name).Distinct().ToList();
             chart.ChartNamesTwo = rowsTwo.Select(n => n.Name).Distinct().ToList();
             chart.ChartTotalOne = FillTheChart(rowsOne, chart.ChartNamesOne);
@@ -55,6 +54,9 @@ namespace TinyShop.Controllers {
             else {
                 chartCommon = dataMerge(chart.ChartNamesTwo, chart.ChartNamesOne, chart.ChartTotalTwo, chart.ChartTotalOne);
             }
+
+            chartCommon.Years = db.Rows.Select(r => r.Date.Year).Distinct().ToList();
+            chartCommon.Months = db.Rows.Select(r => r.Date.Month).Distinct().ToList();
 
             return View(chartCommon);
         }
@@ -125,8 +127,44 @@ namespace TinyShop.Controllers {
 
         private ChartInfo dataMerge (List<string> longString, List<string> shortString, List<decimal> longNumber, List<decimal> shortNumber) {
             List<string> commonString = new List<string>();
+            List<decimal> newNumberOne = new List<decimal>();
+            List<decimal> newNumberTwo = new List<decimal>();
+            ChartInfo chart = new ChartInfo();
+
             //merge the strings and delete repeated values
             commonString = longString.Concat(shortString).Distinct().ToList();
+            foreach (string strOne in commonString) {
+                int i = 0;
+                bool strExist = false;
+                foreach (string strTwo in longString) {
+                    if (strOne == strTwo) {
+                        newNumberOne.Add(longNumber[i]);
+                        strExist = true;
+                        break;
+                    }
+                    i++;
+                }
+                if (!strExist) {
+                    newNumberOne.Add(0);
+                }
+                i = 0;
+                strExist = false;
+                foreach (string strTwo in shortString) {
+                    if (strOne == strTwo) {
+                        newNumberTwo.Add(shortNumber[i]);
+                        strExist = true;
+                        break;
+                    }
+                    i++;
+                }
+                if (!strExist) {
+                    newNumberTwo.Add(0);
+                }
+            }
+            chart.ChartTotalOne = newNumberOne;
+            chart.ChartNamesOne = commonString;
+            chart.ChartTotalTwo = newNumberTwo;
+            return chart;            
         }
     }
 }
