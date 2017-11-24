@@ -48,12 +48,7 @@ namespace TinyShop.Controllers {
             chart.ChartTotalOne = FillTheChart(rowsOne, chart.ChartNamesOne);
             chart.ChartTotalTwo = FillTheChart(rowsTwo, chart.ChartNamesTwo);
 
-            if (chart.ChartNamesOne.Count >= chart.ChartNamesTwo.Count) {
-                chartCommon = dataMerge(chart.ChartNamesOne, chart.ChartNamesTwo, chart.ChartTotalOne, chart.ChartTotalTwo);
-            }
-            else {
-                chartCommon = dataMerge(chart.ChartNamesTwo, chart.ChartNamesOne, chart.ChartTotalTwo, chart.ChartTotalOne);
-            }
+            chartCommon = dataMerge(chart.ChartNamesOne, chart.ChartNamesTwo, chart.ChartTotalOne, chart.ChartTotalTwo);
 
             chartCommon.Years = db.Rows.Select(r => r.Date.Year).Distinct().ToList();
             chartCommon.Months = db.Rows.Select(r => r.Date.Month).Distinct().ToList();
