@@ -38,6 +38,7 @@ namespace TinyShop.Controllers {
             DateTime dateRequestOne = new DateTime(yearOne, monthOne, 01);
             DateTime dateRequestTwo = new DateTime(yearTwo, monthTwo, 01);
             ChartInfo chart = new ChartInfo();
+            ChartInfo chartCommon = new ChartInfo();
 
             List<Row> rowsOne = db.Rows.Where(row => row.Date.Month == dateRequestOne.Month).ToList();
             List<Row> rowsTwo = db.Rows.Where(row => row.Date.Month == dateRequestTwo.Month).ToList();
@@ -49,13 +50,13 @@ namespace TinyShop.Controllers {
             chart.ChartTotalTwo = FillTheChart(rowsTwo, chart.ChartNamesTwo);
 
             if (chart.ChartNamesOne.Count >= chart.ChartNamesTwo.Count) {
-                dataMerge(chart.ChartNamesOne, chart.ChartNamesTwo, chart.ChartTotalOne, chart.ChartTotalTwo);
+                chartCommon = dataMerge(chart.ChartNamesOne, chart.ChartNamesTwo, chart.ChartTotalOne, chart.ChartTotalTwo);
             }
             else {
-                dataMerge(chart.ChartNamesTwo, chart.ChartNamesOne, chart.ChartTotalTwo, chart.ChartTotalOne);
+                chartCommon = dataMerge(chart.ChartNamesTwo, chart.ChartNamesOne, chart.ChartTotalTwo, chart.ChartTotalOne);
             }
 
-            return View(chart);
+            return View(chartCommon);
         }
         [HttpGet]
         public ActionResult Сonfiguration () {
@@ -122,8 +123,10 @@ namespace TinyShop.Controllers {
             return totalList;
         }
 
-        private void dataMerge (List<string> longString, List<string> shortString, List<decimal> longNumber, List<decimal> shortNumber) {
-            
+        private ChartInfo dataMerge (List<string> longString, List<string> shortString, List<decimal> longNumber, List<decimal> shortNumber) {
+            List<string> commonString = new List<string>();
+            //merge the strings and delete repeated values
+            commonString = longString.Concat(shortString).Distinct().ToList();
         }
     }
 }
