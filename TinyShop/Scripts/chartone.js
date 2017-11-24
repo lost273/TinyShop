@@ -58,6 +58,10 @@ var myChart = new Chart(ctx, {
                 }
             }]
         },
-        legend: {display: false}
+        legend: { display: false },
+        title: {
+            display: true,
+            text: 'Chart.js Horizontal Bar Chart'
+        }
     }
 });
