@@ -3,8 +3,11 @@
     var namesArrayOne = @Html.Raw(Json.Encode(Model.ChartNamesOne));
     var totalArrayOne = @Html.Raw(Json.Encode(Model.ChartTotalOne));
     var totalArrayTwo = @Html.Raw(Json.Encode(Model.ChartTotalTwo));
-    var total
+    var months = @Html.Raw(Json.Encode(ViewBag.chartYear.ChartNamesOne));
+    var yearArrayOne = @Html.Raw(Json.Encode(ViewBag.chartYear.ChartTotalOne));
+    var yearArrayTwo = @Html.Raw(Json.Encode(ViewBag.chartYear.ChartTotalTwo));
     var infoString = '@ViewBag.dateRequest';
+    var infoStringYear = '@ViewBag.dateRequestYear';
 </script>
 
 <div class="row">

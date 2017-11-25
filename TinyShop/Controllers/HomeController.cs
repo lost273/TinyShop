@@ -37,25 +37,25 @@ namespace TinyShop.Controllers {
         public ActionResult Diagram (int yearOne = 1, int monthOne = 1, int yearTwo = 1, int monthTwo = 1) {
             DateTime dateRequestOne = new DateTime(yearOne, monthOne, 01);
             DateTime dateRequestTwo = new DateTime(yearTwo, monthTwo, 01);
-            ChartInfo chartCommon = new ChartInfo();
+            ChartInfo chartMonth = new ChartInfo();
 
             //get the rows according the input date period
             List<Row> rowsOne = db.Rows.Where(row => row.Date.Month == dateRequestOne.Month).ToList();
             List<Row> rowsTwo = db.Rows.Where(row => row.Date.Month == dateRequestTwo.Month).ToList();
 
             //get data for the whole year
-            List<int> monthsYearOne = db.Rows.Where(row => row.Date.Year == dateRequestOne.Year).Select(m => m.Date.Month).Distinct().ToList();
-            List<int> monthsYearTwo = new List<int>();
+            List<string> monthsYearOne = db.Rows.Where(row => row.Date.Year == dateRequestOne.Year).Select(m => m.Date.Month.ToString()).Distinct().ToList();
+            List<string> monthsYearTwo = new List<string>();
             List<decimal> totalYearOne = new List<decimal>();
             List<decimal> totalYearTwo = new List<decimal>();
             if (dateRequestOne.Year != dateRequestTwo.Year) {
-                monthsYearTwo = db.Rows.Where(row => row.Date.Year == dateRequestTwo.Year).Select(m => m.Date.Month).Distinct().ToList();
-                foreach (int month in monthsYearTwo) {
-                    totalYearTwo.Add(db.Rows.Where(m => (m.Date.Month == month) && (m.Date.Year == dateRequestTwo.Year)).Select(t => t.Total).Sum());
+                monthsYearTwo = db.Rows.Where(row => row.Date.Year == dateRequestTwo.Year).Select(m => m.Date.Month.ToString()).Distinct().ToList();
+                foreach (string month in monthsYearTwo) {
+                    totalYearTwo.Add(db.Rows.Where(m => (m.Date.Month.ToString() == month) && (m.Date.Year == dateRequestTwo.Year)).Select(t => t.Total).Sum());
                 }
             }
-            foreach (int month in monthsYearOne) {
-                totalYearOne.Add(db.Rows.Where(m => (m.Date.Month == month) && (m.Date.Year == dateRequestOne.Year)).Select(t => t.Total).Sum());
+            foreach (string month in monthsYearOne) {
+                totalYearOne.Add(db.Rows.Where(m => (m.Date.Month.ToString() == month) && (m.Date.Year == dateRequestOne.Year)).Select(t => t.Total).Sum());
             }
 
             List<string> ChartNamesOne = rowsOne.Select(n => n.Name).Distinct().ToList();
@@ -63,18 +63,16 @@ namespace TinyShop.Controllers {
             List<decimal> ChartTotalOne = FillTheChart(rowsOne, ChartNamesOne);
             List<decimal> ChartTotalTwo = FillTheChart(rowsTwo, ChartNamesTwo);
 
-            chartCommon = dataMerge(ChartNamesOne, ChartNamesTwo, ChartTotalOne, ChartTotalTwo);
+            chartMonth = DataMerge(ChartNamesOne, ChartNamesTwo, ChartTotalOne, ChartTotalTwo);
+            ViewBag.chartYear = DataMerge(monthsYearOne, monthsYearTwo, totalYearOne, totalYearTwo);
             //available months and years
-            chartCommon.Years = db.Rows.Select(r => r.Date.Year).Distinct().ToList();
-            chartCommon.Months = db.Rows.Select(r => r.Date.Month).Distinct().ToList();
+            chartMonth.Years = db.Rows.Select(r => r.Date.Year).Distinct().ToList();
+            chartMonth.Months = db.Rows.Select(r => r.Date.Month).Distinct().ToList();
 
-            chartCommon.MonthsNames = monthsYearOne;
-            chartCommon.TotalYearOne = totalYearOne;
-            chartCommon.TotalYearTwo = totalYearTwo;
             //title for the chart
             ViewBag.dateRequest = $"{dateRequestOne.Month}.{dateRequestOne.Year} - {dateRequestTwo.Month}.{dateRequestTwo.Year}";
-
-            return View(chartCommon);
+            ViewBag.dateRequestYear = $"{dateRequestOne.Year} - {dateRequestTwo.Year}";
+            return View(chartMonth);
         }
         [HttpGet]
         public ActionResult Сonfiguration () {
@@ -141,21 +139,21 @@ namespace TinyShop.Controllers {
             return totalList;
         }
         //merge the strings and compare numbers for chart whom contain two datasets
-        private ChartInfo dataMerge (List<string> longString, List<string> shortString, List<decimal> longNumber, List<decimal> shortNumber) {
+        private ChartInfo DataMerge (List<string> oneString, List<string> twoString, List<decimal> oneNumber, List<decimal> twoNumber) {
             List<string> commonString = new List<string>();
             List<decimal> newNumberOne = new List<decimal>();
             List<decimal> newNumberTwo = new List<decimal>();
             ChartInfo chart = new ChartInfo();
 
             //merge the strings and delete repeated values
-            commonString = longString.Concat(shortString).Distinct().ToList();
+            commonString = oneString.Concat(twoString).Distinct().ToList();
             //sort numbers according the strings
             foreach (string strOne in commonString) {
                 int i = 0;
                 bool strExist = false;
-                foreach (string strTwo in longString) {
+                foreach (string strTwo in oneString) {
                     if (strOne == strTwo) {
-                        newNumberOne.Add(longNumber[i]);
+                        newNumberOne.Add(oneNumber[i]);
                         strExist = true;
                         break;
                     }
@@ -166,9 +164,9 @@ namespace TinyShop.Controllers {
                 }
                 i = 0;
                 strExist = false;
-                foreach (string strTwo in shortString) {
+                foreach (string strTwo in twoString) {
                     if (strOne == strTwo) {
-                        newNumberTwo.Add(shortNumber[i]);
+                        newNumberTwo.Add(twoNumber[i]);
                         strExist = true;
                         break;
                     }
