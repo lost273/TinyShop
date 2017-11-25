@@ -37,10 +37,6 @@ namespace TinyShop.Controllers {
         public ActionResult Diagram (int yearOne = 1, int monthOne = 1, int yearTwo = 1, int monthTwo = 1) {
             DateTime dateRequestOne = new DateTime(yearOne, monthOne, 01);
             DateTime dateRequestTwo = new DateTime(yearTwo, monthTwo, 01);
-            List<string> ChartNamesOne = new List<string>();
-            List<string> ChartNamesTwo = new List<string>();
-            List<decimal> ChartTotalOne = new List<decimal>();
-            List<decimal> ChartTotalTwo = new List<decimal>();
             ChartInfo chartCommon = new ChartInfo();
 
             //get the rows according the input date period
@@ -48,23 +44,33 @@ namespace TinyShop.Controllers {
             List<Row> rowsTwo = db.Rows.Where(row => row.Date.Month == dateRequestTwo.Month).ToList();
 
             //get data for the whole year
-            decimal yearOneTotal = db.Rows.Where(row => row.Date.Year == dateRequestOne.Year).Select(t => t.Total).Sum();
+            List<int> monthsYearOne = db.Rows.Where(row => row.Date.Year == dateRequestOne.Year).Select(m => m.Date.Month).Distinct().ToList();
+            List<int> monthsYearTwo = new List<int>();
+            List<decimal> totalYearOne = new List<decimal>();
+            List<decimal> totalYearTwo = new List<decimal>();
             if (dateRequestOne.Year != dateRequestTwo.Year) {
-                decimal yearTwoTotal = db.Rows.Where(row => row.Date.Year == dateRequestTwo.Year).Select(t => t.Total).Sum();
+                monthsYearTwo = db.Rows.Where(row => row.Date.Year == dateRequestTwo.Year).Select(m => m.Date.Month).Distinct().ToList();
+                foreach (int month in monthsYearTwo) {
+                    totalYearTwo.Add(db.Rows.Where(m => (m.Date.Month == month) && (m.Date.Year == dateRequestTwo.Year)).Select(t => t.Total).Sum());
+                }
             }
-            else {
-                decimal yearTwoTotal = yearOneTotal;
+            foreach (int month in monthsYearOne) {
+                totalYearOne.Add(db.Rows.Where(m => (m.Date.Month == month) && (m.Date.Year == dateRequestOne.Year)).Select(t => t.Total).Sum());
             }
 
-            ChartNamesOne = rowsOne.Select(n => n.Name).Distinct().ToList();
-            ChartNamesTwo = rowsTwo.Select(n => n.Name).Distinct().ToList();
-            ChartTotalOne = FillTheChart(rowsOne, ChartNamesOne);
-            ChartTotalTwo = FillTheChart(rowsTwo, ChartNamesTwo);
+            List<string> ChartNamesOne = rowsOne.Select(n => n.Name).Distinct().ToList();
+            List<string> ChartNamesTwo = rowsTwo.Select(n => n.Name).Distinct().ToList();
+            List<decimal> ChartTotalOne = FillTheChart(rowsOne, ChartNamesOne);
+            List<decimal> ChartTotalTwo = FillTheChart(rowsTwo, ChartNamesTwo);
 
             chartCommon = dataMerge(ChartNamesOne, ChartNamesTwo, ChartTotalOne, ChartTotalTwo);
             //available months and years
             chartCommon.Years = db.Rows.Select(r => r.Date.Year).Distinct().ToList();
             chartCommon.Months = db.Rows.Select(r => r.Date.Month).Distinct().ToList();
+
+            chartCommon.MonthsNames = monthsYearOne;
+            chartCommon.TotalYearOne = totalYearOne;
+            chartCommon.TotalYearTwo = totalYearTwo;
             //title for the chart
             ViewBag.dateRequest = $"{dateRequestOne.Month}.{dateRequestOne.Year} - {dateRequestTwo.Month}.{dateRequestTwo.Year}";
 
