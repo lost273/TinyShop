@@ -43,15 +43,26 @@ namespace TinyShop.Controllers {
             List<decimal> ChartTotalTwo = new List<decimal>();
             ChartInfo chartCommon = new ChartInfo();
 
+            //get the rows according the input date period
             List<Row> rowsOne = db.Rows.Where(row => row.Date.Month == dateRequestOne.Month).ToList();
             List<Row> rowsTwo = db.Rows.Where(row => row.Date.Month == dateRequestTwo.Month).ToList();
-            
+
+            //get data for the whole year
+            decimal yearOneTotal = db.Rows.Where(row => row.Date.Year == dateRequestOne.Year).Select(t => t.Total).Sum();
+            if (dateRequestOne.Year != dateRequestTwo.Year) {
+                decimal yearTwoTotal = db.Rows.Where(row => row.Date.Year == dateRequestTwo.Year).Select(t => t.Total).Sum();
+            }
+            else {
+                decimal yearTwoTotal = yearOneTotal;
+            }
+
             ChartNamesOne = rowsOne.Select(n => n.Name).Distinct().ToList();
             ChartNamesTwo = rowsTwo.Select(n => n.Name).Distinct().ToList();
             ChartTotalOne = FillTheChart(rowsOne, ChartNamesOne);
             ChartTotalTwo = FillTheChart(rowsTwo, ChartNamesTwo);
 
             chartCommon = dataMerge(ChartNamesOne, ChartNamesTwo, ChartTotalOne, ChartTotalTwo);
+            //available months and years
             chartCommon.Years = db.Rows.Select(r => r.Date.Year).Distinct().ToList();
             chartCommon.Months = db.Rows.Select(r => r.Date.Month).Distinct().ToList();
             //title for the chart
@@ -132,6 +143,7 @@ namespace TinyShop.Controllers {
 
             //merge the strings and delete repeated values
             commonString = longString.Concat(shortString).Distinct().ToList();
+            //sort numbers according the strings
             foreach (string strOne in commonString) {
                 int i = 0;
                 bool strExist = false;
