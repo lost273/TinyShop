@@ -37,22 +37,24 @@ namespace TinyShop.Controllers {
         public ActionResult Diagram (int yearOne = 1, int monthOne = 1, int yearTwo = 1, int monthTwo = 1) {
             DateTime dateRequestOne = new DateTime(yearOne, monthOne, 01);
             DateTime dateRequestTwo = new DateTime(yearTwo, monthTwo, 01);
-            ChartInfo chart = new ChartInfo();
+            List<string> ChartNamesOne = new List<string>();
+            List<string> ChartNamesTwo = new List<string>();
+            List<decimal> ChartTotalOne = new List<decimal>();
+            List<decimal> ChartTotalTwo = new List<decimal>();
             ChartInfo chartCommon = new ChartInfo();
 
             List<Row> rowsOne = db.Rows.Where(row => row.Date.Month == dateRequestOne.Month).ToList();
             List<Row> rowsTwo = db.Rows.Where(row => row.Date.Month == dateRequestTwo.Month).ToList();
             
-            chart.ChartNamesOne = rowsOne.Select(n => n.Name).Distinct().ToList();
-            chart.ChartNamesTwo = rowsTwo.Select(n => n.Name).Distinct().ToList();
-            chart.ChartTotalOne = FillTheChart(rowsOne, chart.ChartNamesOne);
-            chart.ChartTotalTwo = FillTheChart(rowsTwo, chart.ChartNamesTwo);
+            ChartNamesOne = rowsOne.Select(n => n.Name).Distinct().ToList();
+            ChartNamesTwo = rowsTwo.Select(n => n.Name).Distinct().ToList();
+            ChartTotalOne = FillTheChart(rowsOne, ChartNamesOne);
+            ChartTotalTwo = FillTheChart(rowsTwo, ChartNamesTwo);
 
-            chartCommon = dataMerge(chart.ChartNamesOne, chart.ChartNamesTwo, chart.ChartTotalOne, chart.ChartTotalTwo);
-
+            chartCommon = dataMerge(ChartNamesOne, ChartNamesTwo, ChartTotalOne, ChartTotalTwo);
             chartCommon.Years = db.Rows.Select(r => r.Date.Year).Distinct().ToList();
             chartCommon.Months = db.Rows.Select(r => r.Date.Month).Distinct().ToList();
-
+            //title for the chart
             ViewBag.dateRequest = $"{dateRequestOne.Month}.{dateRequestOne.Year} - {dateRequestTwo.Month}.{dateRequestTwo.Year}";
 
             return View(chartCommon);
@@ -121,7 +123,7 @@ namespace TinyShop.Controllers {
             }
             return totalList;
         }
-
+        //merge the strings and compare numbers for chart whom contain two datasets
         private ChartInfo dataMerge (List<string> longString, List<string> shortString, List<decimal> longNumber, List<decimal> shortNumber) {
             List<string> commonString = new List<string>();
             List<decimal> newNumberOne = new List<decimal>();
