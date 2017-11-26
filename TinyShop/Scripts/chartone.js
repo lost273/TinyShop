@@ -6,7 +6,7 @@ var myChart = new Chart(ctx, {
         labels: namesArrayOne,//for test ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"]
         datasets: [
             {
-                label: 'Period №1',
+                label: dateRequestOne,
                 data: totalArrayOne,//for test [12, 19, 3, 5, 2, 3]
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
@@ -27,7 +27,7 @@ var myChart = new Chart(ctx, {
                 borderWidth: 1
             },
             {
-                label: 'Period №2',
+                label: dateRequestTwo,
                 data: totalArrayTwo,//for test [12, 19, 3, 5, 2, 3]
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
@@ -52,7 +52,7 @@ var myChart = new Chart(ctx, {
     options: {
         title: {
             display: true,
-            text: infoString
+            text: dateRequestOne + ' ' + dateRequestTwo
         },
         maintainAspectRatio: false,
         scales: {

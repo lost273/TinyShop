@@ -70,7 +70,8 @@ namespace TinyShop.Controllers {
             ViewBag.requestMonths = db.Rows.Select(r => r.Date.Month).Distinct().ToList();
 
             //title for the chart
-            ViewBag.dateRequest = $"{dateRequestOne.Month}.{dateRequestOne.Year} - {dateRequestTwo.Month}.{dateRequestTwo.Year}";
+            ViewBag.dateRequestOne = $"(Period №1 - {dateRequestOne.Month}.{dateRequestOne.Year})";
+            ViewBag.dateRequestTwo = $"(Period №2 - {dateRequestTwo.Month}.{dateRequestTwo.Year})";
             ViewBag.periodOne = $"{dateRequestOne.Year}";
             ViewBag.periodTwo = $"{dateRequestTwo.Year}";
             return View(chartMonth);
