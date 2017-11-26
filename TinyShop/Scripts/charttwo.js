@@ -6,14 +6,14 @@ var myChart = new Chart(ctx, {
         labels: months,//string data
         datasets: [
             {
-                label: 'Period №1',
+                label: periodOne,
                 fill: false,
                 data: yearArrayOne,//number data
                 backgroundColor: 'rgba(255, 99, 132, 0.2)',
                 borderColor: 'rgba(255,99,132,1)',
             },
             {
-                label: 'Period №2',
+                label: periodTwo,
                 fill: false,
                 data: yearArrayTwo,//number data
                 backgroundColor: 'rgba(54, 162, 235, 0.2)',
@@ -22,10 +22,6 @@ var myChart = new Chart(ctx, {
         ]
     },
     options: {
-        title: {
-            display: true,
-            text: infoStringYear
-        },
         maintainAspectRatio: false,
         scales: {
             yAxes: [{

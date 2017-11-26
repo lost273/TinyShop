@@ -7,7 +7,8 @@
     var yearArrayOne = @Html.Raw(Json.Encode(ViewBag.chartYear.ChartTotalOne));
     var yearArrayTwo = @Html.Raw(Json.Encode(ViewBag.chartYear.ChartTotalTwo));
     var infoString = '@ViewBag.dateRequest';
-    var infoStringYear = '@ViewBag.dateRequestYear';
+    var periodOne = '@ViewBag.periodOne';
+    var periodTwo = '@ViewBag.periodTwo';
 </script>
 
 <div class="row">
@@ -56,12 +57,12 @@
                 </form>
             </div>
             <div class="panel-body">
-                        <div id="chart_container">
-                            <canvas id="bar_chart"></canvas>
-                        </div>
-                            <div id="chart_container">
-                                <canvas id="bar_charttwo"></canvas>
-                            </div>
+                <div id="chart_container">
+                    <canvas id="bar_chart"></canvas>
+                </div>
+                <div id="chart_container">
+                    <canvas id="bar_charttwo"></canvas>
+                </div>
              </div>
         </div>
     </div>

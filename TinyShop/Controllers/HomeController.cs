@@ -71,7 +71,8 @@ namespace TinyShop.Controllers {
 
             //title for the chart
             ViewBag.dateRequest = $"{dateRequestOne.Month}.{dateRequestOne.Year} - {dateRequestTwo.Month}.{dateRequestTwo.Year}";
-            ViewBag.dateRequestYear = $"{dateRequestOne.Year} - {dateRequestTwo.Year}";
+            ViewBag.periodOne = $"{dateRequestOne.Year}";
+            ViewBag.periodTwo = $"{dateRequestTwo.Year}";
             return View(chartMonth);
         }
         [HttpGet]
