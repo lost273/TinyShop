@@ -27,8 +27,6 @@ namespace TinyShop.Models {
         public List<string> ChartNamesOne { get; set; }
         public List<decimal> ChartTotalTwo { get; set; }
         public List<string> ChartNamesTwo { get; set; }
-        public List<int> Years { get; set; }
-        public List<int> Months { get; set; }
     }
     public class OneDayContext : DbContext {
         public OneDayContext () : base("DefaultConnection")  { }

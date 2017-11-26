@@ -40,8 +40,8 @@ namespace TinyShop.Controllers {
             ChartInfo chartMonth = new ChartInfo();
 
             //get the rows according the input date period
-            List<Row> rowsOne = db.Rows.Where(row => row.Date.Month == dateRequestOne.Month).ToList();
-            List<Row> rowsTwo = db.Rows.Where(row => row.Date.Month == dateRequestTwo.Month).ToList();
+            List<Row> rowsOne = db.Rows.Where(row => (row.Date.Month == dateRequestOne.Month) && (row.Date.Year == dateRequestOne.Year)).ToList();
+            List<Row> rowsTwo = db.Rows.Where(row => (row.Date.Month == dateRequestTwo.Month) && (row.Date.Year == dateRequestTwo.Year)).ToList();
 
             //get data for the whole year
             List<string> monthsYearOne = db.Rows.Where(row => row.Date.Year == dateRequestOne.Year).Select(m => m.Date.Month.ToString()).Distinct().ToList();
@@ -66,8 +66,8 @@ namespace TinyShop.Controllers {
             chartMonth = DataMerge(ChartNamesOne, ChartNamesTwo, ChartTotalOne, ChartTotalTwo);
             ViewBag.chartYear = DataMerge(monthsYearOne, monthsYearTwo, totalYearOne, totalYearTwo);
             //available months and years
-            chartMonth.Years = db.Rows.Select(r => r.Date.Year).Distinct().ToList();
-            chartMonth.Months = db.Rows.Select(r => r.Date.Month).Distinct().ToList();
+            ViewBag.requestYears = db.Rows.Select(r => r.Date.Year).Distinct().ToList();
+            ViewBag.requestMonths = db.Rows.Select(r => r.Date.Month).Distinct().ToList();
 
             //title for the chart
             ViewBag.dateRequest = $"{dateRequestOne.Month}.{dateRequestOne.Year} - {dateRequestTwo.Month}.{dateRequestTwo.Year}";

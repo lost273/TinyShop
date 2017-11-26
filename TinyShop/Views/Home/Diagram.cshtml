@@ -21,7 +21,7 @@
                     <div class="form-group">
                         <label>Period №1 : Month</label>
                         <select name="monthOne" class="form-control" selected="1">
-                            @foreach (int month in Model.Months) {
+                            @foreach (int month in ViewBag.requestMonths) {
                                 <option value="@month">@month</option>
                             }
                         </select>
@@ -29,7 +29,7 @@
                     <div class="form-group">
                         <label>Period №1 : Year</label>
                         <select name="yearOne" class="form-control">
-                            @foreach (int year in Model.Years) {
+                            @foreach (int year in ViewBag.requestYears) {
                                 <option value="@year">@year</option>
                             }
                         </select>
@@ -38,7 +38,7 @@
                     <div class="form-group">
                         <label>Period №2 : Month</label>
                         <select name="monthTwo" class="form-control" selected="1">
-                            @foreach (int month in Model.Months) {
+                            @foreach (int month in ViewBag.requestMonths) {
                                 <option value="@month">@month</option>
                             }
                         </select>
@@ -46,7 +46,7 @@
                     <div class="form-group">
                         <label>Period №2 : Year</label>
                         <select name="yearTwo" class="form-control">
-                            @foreach (int year in Model.Years) {
+                            @foreach (int year in ViewBag.requestYears) {
                                 <option value="@year">@year</option>
                             }
                         </select>
@@ -56,13 +56,13 @@
                 </form>
             </div>
             <div class="panel-body">
-                <div id="chart_container">
-                    <canvas id="bar_chart"></canvas>
-                </div>
-                <div id="chart_container">
-                    <canvas id="bar_charttwo"></canvas>
-                </div>
-            </div>
+                        <div id="chart_container">
+                            <canvas id="bar_chart"></canvas>
+                        </div>
+                            <div id="chart_container">
+                                <canvas id="bar_charttwo"></canvas>
+                            </div>
+             </div>
         </div>
     </div>
 </div>
