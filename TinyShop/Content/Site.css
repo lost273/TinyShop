@@ -33,3 +33,6 @@ textarea {
     padding: 1px;
     border-radius: 4px;
 }
+span.field-validation-error{
+     color:red;
+}

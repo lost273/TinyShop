@@ -82,9 +82,13 @@
 
 
 <h3>Add new consumption:</h3>
+
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
-        <form name="addnewconsumption" class="form-inline" role="form" action="/Home/Index" method="post">
+        <form class="form-inline" role="form" action="/Home/Index" method="post">
+            <span class="field-validation-valid" data-valmsg-for="row.Quantity" data-valmsg-replace="true"></span>
+            <span class="field-validation-valid" data-valmsg-for="row.Cost" data-valmsg-replace="true"></span>
+            <br />
             <div class="form-group">
                 <input type="hidden" name="row.Date" class="form-control" value="@ViewBag.Time">
                 <select name="row.Name" class="form-control">
@@ -94,10 +98,10 @@
                 </select>
             </div>
             <div class="form-group">
-                <input id="quantity" type="number" min="1" step="1" name="row.Quantity" class="form-control">
+                <input data-val="true" data-val-required="Please enter correct quantity." id="quantity" type="number" min="1" step="1" name="row.Quantity" class="form-control">
             </div>
             <div class="form-group">
-                <input id="cost" type="text" name="row.Cost" class="form-control">
+                <input data-val="true" data-val-required="Please enter correct cost." id="cost" type="text" name="row.Cost" class="form-control">
             </div>
             <div class="form-group">
                 <input id="total" type="text" name="row.Total" class="form-control" readonly>
@@ -105,18 +109,21 @@
             <div class="form-group">
                 <input type="submit" class="btn btn-success" value="add">
             </div>
-            <label for="FirstName">First Name:</label>
-            <input data-val="true" data-val-required="Please enter the first name." id="FirstName" name="FirstName" type="text" value="">
-            
-                <span class="field-validation-valid" data-valmsg-for="FirstName" data-valmsg-replace="true"><div class="alert alert-danger" role="alert"></div></span>
-            
         </form>
     </div>
 </div>
 
+<form class="form-inline" role="form" action="/Home/Index" method="post">
+    <div class="form-group">
+        <input data-val="true" data-val-required="Please enter the first name." id="quantity" name="row.Quantity" type="number" value="" class="form-control">
+        <span class="field-validation-valid" data-valmsg-for="row.Quantity" data-valmsg-replace="true"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" class="btn btn-success" value="GO GO">
+    </div>
+</form>
 
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-@Scripts.Render("~/scripts/multiply.js")
-}
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+        @Scripts.Render("~/scripts/multiply.js")
+    }
