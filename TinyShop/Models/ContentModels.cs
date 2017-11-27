@@ -11,8 +11,11 @@ namespace TinyShop.Models {
         [Key]
         public int RowId { get; set; }
         public DateTime Date { get; set; }
+        [Required]
         public string Name { get; set; }
+        [Required]
         public int Quantity { get; set; }
+        [Required]
         public decimal Cost { get; set; }
         public decimal Total { get; set; }
     }
@@ -20,6 +23,7 @@ namespace TinyShop.Models {
     public class Product{
         [Key]
         public int ProductId { get; set; }
+        [Required]
         public string Name { get; set; }
     }
     public class ChartInfo {

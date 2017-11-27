@@ -29,6 +29,9 @@ namespace TinyShop.Controllers {
         }
         [HttpPost]
         public ActionResult Index(Row row) {
+            if (!ModelState.IsValid) {
+                return RedirectToAction("Index");
+            }
             row.Total = row.Quantity * row.Cost;
             db.Rows.Add(row);
             db.SaveChanges();
@@ -82,6 +85,9 @@ namespace TinyShop.Controllers {
         }
         [HttpPost]
         public ActionResult Сonfiguration (Product product) {
+            if (!ModelState.IsValid) {
+                return RedirectToAction("Сonfiguration");
+            }
             db.Products.Add(product);
             db.SaveChanges();
 
@@ -89,6 +95,9 @@ namespace TinyShop.Controllers {
         }
         [HttpPost]
         public ActionResult ChangeProduct (Product product, string action) {
+            if (!ModelState.IsValid) {
+                return RedirectToAction("Сonfiguration");
+            }
             if (action == "change") {
                 db.Entry(product).State = EntityState.Modified;
                 db.SaveChanges();
@@ -103,6 +112,9 @@ namespace TinyShop.Controllers {
         }
         [HttpPost]
         public ActionResult ChangeRow(Row row, string action) {
+            if (!ModelState.IsValid) {
+                return RedirectToAction("Index");
+            }
             if (action == "change") {
                 row.Total = row.Quantity * row.Cost;
                 db.Entry(row).State = EntityState.Modified;
