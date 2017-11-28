@@ -228,7 +228,6 @@
     <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\charttwo.js" />
     <Content Include="Scripts\chartone.js" />
-    <Content Include="Scripts\form-validation.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -276,6 +275,7 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\Chart.cshtml" />
+    <Content Include="Views\ExceptionFound.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

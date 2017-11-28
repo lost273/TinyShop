@@ -12,6 +12,7 @@ namespace TinyShop.Controllers {
     public class HomeController : Controller {
         OneDayContext db = new OneDayContext();
         [HttpGet]
+        [CatchException]
         public ActionResult Index (int year = 1, int month = 1, int day = 1) {
             ViewBag.Products = db.Products;
             ViewBag.Total = 0;
