@@ -1,7 +1,9 @@
 ﻿$(document).ready(function () {
     $('.form-control').on('change', function () {
         if (!isNaN(parseFloat($(this).val()))) {
-            $('#total').val((parseFloat($('#quantity').val()) * parseFloat($('#cost').val())).toFixed(2).replace('.', ','));
+            var quantity = parseFloat($('#quantity').val().replace(',', '.'));
+            var cost = parseFloat($('#cost').val().replace(',', '.'));
+            $('#total').val((quantity * cost).toFixed(2).replace('.', ','));
         }
     });
 });
