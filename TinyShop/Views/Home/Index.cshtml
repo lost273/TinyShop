@@ -101,7 +101,7 @@
                 <input data-val="true" data-val-required="Please enter correct quantity." id="quantity" type="number" min="1" step="1" name="row.Quantity" class="form-control">
             </div>
             <div class="form-group">
-                <input data-val="true" data-val-required="Please enter correct cost." id="cost" type="text" name="row.Cost" class="form-control">
+                <input data-val="true" data-val-required="Please enter correct cost." id="cost" type="number" min=".01" step=".01" name="row.Cost" class="form-control">
             </div>
             <div class="form-group">
                 <input id="total" type="text" name="row.Total" class="form-control" readonly>
@@ -113,17 +113,18 @@
     </div>
 </div>
 
-<form class="form-inline" role="form" action="/Home/Index" method="post">
-    <div class="form-group">
-        <input data-val="true" data-val-required="Please enter the first name." id="quantity" name="row.Quantity" type="number" value="" class="form-control">
-        <span class="field-validation-valid" data-valmsg-for="row.Quantity" data-valmsg-replace="true"></span>
-    </div>
-    <div class="form-group">
-        <input type="submit" class="btn btn-success" value="GO GO">
-    </div>
-</form>
-
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-        @Scripts.Render("~/scripts/multiply.js")
+@section Scripts {
+    @Scripts.Render("~/scripts/multiply.js")
+    @Scripts.Render("~/bundles/jqueryval")
+    @*<script>
+    // переопределение валидации на стороне клиента
+    $.validator.methods.range = function (value, element, param) {
+        var globalizedValue = value.replace(",", ".");
+        return this.optional(element) || (globalizedValue >= param[0] && globalizedValue <= param[1]);
     }
+
+    $.validator.methods.number = function (value, element) {
+        return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
+    }
+    </script>*@
+}
