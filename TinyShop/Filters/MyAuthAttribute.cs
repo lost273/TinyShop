@@ -24,14 +24,4 @@ namespace TinyShop.Filters {
             }
         }
     }
-    public class CatchException : FilterAttribute, IExceptionFilter {
-
-        public void OnException (ExceptionContext exceptionContext) {
-            if (!exceptionContext.ExceptionHandled) {
-                exceptionContext.Result = new RedirectResult("/View/ExceptionFound.cshtml");
-                exceptionContext.ExceptionHandled = true;
-            }
-        }
-    }
-
 }

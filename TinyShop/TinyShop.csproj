@@ -198,6 +198,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Filters\CatchException.cs" />
     <Compile Include="Filters\MyAuthAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -275,7 +276,7 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\Chart.cshtml" />
-    <Content Include="Views\ExceptionFound.cshtml" />
+    <Content Include="Content\ExceptionFound.html" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
