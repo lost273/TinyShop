@@ -1,6 +1,10 @@
-﻿
+﻿@model FileInfo[]
 @{
     ViewBag.Title = "Import";
+}
+<h3>Files list:</h3>
+@foreach (FileInfo f in Model) {
+    <p>@f.Name</p>
 }
 
 <h3>Выберите файл для загрузки</h3>

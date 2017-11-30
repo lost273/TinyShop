@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -96,7 +97,9 @@ namespace TinyShop.Controllers {
         }
         [HttpGet]
         public ActionResult Import () {
-            return View();
+            DirectoryInfo filesDir = new DirectoryInfo(Server.MapPath("~/Files/"));
+            FileInfo[] filesArray = filesDir.GetFiles("*.*", SearchOption.AllDirectories);
+            return View(filesArray);
         }
         [HttpPost]
         public ActionResult Import (HttpPostedFileBase upload) {
