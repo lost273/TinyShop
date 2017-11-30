@@ -94,6 +94,19 @@ namespace TinyShop.Controllers {
 
             return RedirectToAction("Сonfiguration");
         }
+        [HttpGet]
+        public ActionResult Import () {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Import (HttpPostedFileBase upload) {
+            if (upload != null) {
+                string fileName = System.IO.Path.GetFileName(upload.FileName);
+                upload.SaveAs(Server.MapPath("~/Files/" + fileName));
+            }
+            return RedirectToAction("Import");
+        }
+
         [HttpPost]
         public ActionResult ChangeProduct (Product product, string action) {
             if (!ModelState.IsValid) {
