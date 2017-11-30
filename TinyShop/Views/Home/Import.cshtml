@@ -2,24 +2,17 @@
 @{
     ViewBag.Title = "Import";
 }
-<h3>Files list:</h3>
-@foreach (FileInfo f in Model) {
-    <p>@f.Name</p>
-}
-<!-- Display filename inside the button instead of its label -->
-
-
-<h3>Выберите файл для загрузки</h3>
 
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="panel panel-default">
             <div class="panel-heading clearfix">
                 <i class="icon-calendar"></i>
-                <h3 class="panel-title">Current date - @DateTime.Today.ToLongDateString()</h3>
+                <h3 class="panel-title">Select a file to upload to the system:</h3>
+                </br>
                 <form class="form-inline" role="form" action="/Home/Import" enctype="multipart/form-data" method="post">
                     <div class="btn-group">
-                        <input type="file" class="form-control" data-filename-placement="inside">
+                        <input type="file" class="form-control" data-filename-placement="inside" name="upload">
                     </div>
                     <div class="btn-group">
                         <button type="submit" class="btn btn-primary" name="action" value="load">Load</button>
@@ -27,10 +20,18 @@
                 </form>
             </div>
             <div class="panel-body">
+                <h3 class="panel-title">Name | Length | CreationTime</h3>
+                <hr/>
                 @foreach (FileInfo f in Model) {
                     <form class="form-inline" role="form" action="/Home/ChangeFile" method="post">
                         <div class="form-group">
-                            <input type="text" class="form-control" name="@f.Name" value="@f.Name" readonly>
+                            <input type="text" class="form-control" name="name" value="@f.Name" readonly>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="length" value="@f.Length" readonly>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="creationtime" value="@f.CreationTime" readonly>
                         </div>
                         <div class="form-group">
                             <input type="submit" class="btn btn-success" name="action" value="apply">

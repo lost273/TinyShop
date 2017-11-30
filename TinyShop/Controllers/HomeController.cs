@@ -39,6 +39,93 @@ namespace TinyShop.Controllers {
             db.SaveChanges();
             return RedirectToAction("Index", "Home", new { year = row.Date.Year, month = row.Date.Month, day = row.Date.Day });
         }
+        [HttpPost]
+        public ActionResult ChangeRow (Row row, string action) {
+            if (!ModelState.IsValid) {
+                return RedirectToAction("Index");
+            }
+            if (action == "change") {
+                row.Total = row.Quantity * row.Cost;
+                db.Entry(row).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            if (action == "delete") {
+                Row p = db.Rows.Find(row.RowId);
+                db.Rows.Remove(p);
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("Index", "Home", new { year = row.Date.Year, month = row.Date.Month, day = row.Date.Day });
+        }
+        [HttpPost]
+        public ActionResult BackInTime (DateTime currentDate, string action) {
+            DateTime newDate = new DateTime();
+            if (action == "back") {
+                newDate = currentDate.AddDays(-1);
+            }
+            if (action == "forward") {
+                newDate = currentDate.AddDays(1);
+            }
+            return RedirectToAction("Index", "Home", new { year = newDate.Year, month = newDate.Month, day = newDate.Day });
+        }
+        [HttpGet]
+        public ActionResult Сonfiguration () {
+            return View(db.Products.ToList());
+        }
+        [HttpPost]
+        public ActionResult Сonfiguration (Product product) {
+            if (!ModelState.IsValid) {
+                return RedirectToAction("Сonfiguration");
+            }
+            db.Products.Add(product);
+            db.SaveChanges();
+
+            return RedirectToAction("Сonfiguration");
+        }
+        [HttpPost]
+        public ActionResult ChangeProduct (Product product, string action) {
+            if (!ModelState.IsValid) {
+                return RedirectToAction("Сonfiguration");
+            }
+            if (action == "change") {
+                db.Entry(product).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            if (action == "delete") {
+                Product p = db.Products.Find(product.ProductId);
+                db.Products.Remove(p);
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("Сonfiguration");
+        }
+        [HttpGet]
+        public ActionResult Import () {
+            DirectoryInfo filesDir = new DirectoryInfo(Server.MapPath("~/Files/"));
+            FileInfo[] filesArray = filesDir.GetFiles("*.*", SearchOption.AllDirectories);
+            return View(filesArray);
+        }
+        [HttpPost]
+        public ActionResult Import (HttpPostedFileBase upload) {
+            if (upload != null) {
+                string fileName = System.IO.Path.GetFileName(upload.FileName);
+                upload.SaveAs(Server.MapPath("~/Files/" + fileName));
+            }
+            return RedirectToAction("Import");
+        }
+        [HttpPost]
+        public ActionResult ChangeFile (string name, string action) {
+            if (action == "delete") {
+                string fullPath = Request.MapPath("~/Files/" + name);
+                if (System.IO.File.Exists(fullPath)) {
+                    System.IO.File.Delete(fullPath);
+                }
+            }
+            if (action == "apply") {
+
+            }
+            return RedirectToAction("Import");
+        }
         public ActionResult Diagram (int yearOne = 1, int monthOne = 1, int yearTwo = 1, int monthTwo = 1) {
             DateTime dateRequestOne = new DateTime(yearOne, monthOne, 01);
             DateTime dateRequestTwo = new DateTime(yearTwo, monthTwo, 01);
@@ -81,81 +168,7 @@ namespace TinyShop.Controllers {
             ViewBag.periodTwo = $"{dateRequestTwo.Year}";
             return View(chartMonth);
         }
-        [HttpGet]
-        public ActionResult Сonfiguration () {
-            return View(db.Products.ToList());
-        }
-        [HttpPost]
-        public ActionResult Сonfiguration (Product product) {
-            if (!ModelState.IsValid) {
-                return RedirectToAction("Сonfiguration");
-            }
-            db.Products.Add(product);
-            db.SaveChanges();
-
-            return RedirectToAction("Сonfiguration");
-        }
-        [HttpGet]
-        public ActionResult Import () {
-            DirectoryInfo filesDir = new DirectoryInfo(Server.MapPath("~/Files/"));
-            FileInfo[] filesArray = filesDir.GetFiles("*.*", SearchOption.AllDirectories);
-            return View(filesArray);
-        }
-        [HttpPost]
-        public ActionResult Import (HttpPostedFileBase upload) {
-            if (upload != null) {
-                string fileName = System.IO.Path.GetFileName(upload.FileName);
-                upload.SaveAs(Server.MapPath("~/Files/" + fileName));
-            }
-            return RedirectToAction("Import");
-        }
-
-        [HttpPost]
-        public ActionResult ChangeProduct (Product product, string action) {
-            if (!ModelState.IsValid) {
-                return RedirectToAction("Сonfiguration");
-            }
-            if (action == "change") {
-                db.Entry(product).State = EntityState.Modified;
-                db.SaveChanges();
-            }
-            if (action == "delete") {
-                Product p = db.Products.Find(product.ProductId);
-                db.Products.Remove(p);
-                db.SaveChanges();
-            }
-            
-            return RedirectToAction("Сonfiguration");
-        }
-        [HttpPost]
-        public ActionResult ChangeRow(Row row, string action) {
-            if (!ModelState.IsValid) {
-                return RedirectToAction("Index");
-            }
-            if (action == "change") {
-                row.Total = row.Quantity * row.Cost;
-                db.Entry(row).State = EntityState.Modified;
-                db.SaveChanges();
-            }
-            if (action == "delete") {
-                Row p = db.Rows.Find(row.RowId);
-                db.Rows.Remove(p);
-                db.SaveChanges();
-            }
-
-            return RedirectToAction("Index", "Home", new { year = row.Date.Year, month = row.Date.Month, day = row.Date.Day });
-        }
-        [HttpPost]
-        public ActionResult BackInTime (DateTime currentDate, string action) {
-            DateTime newDate = new DateTime();
-            if (action == "back") {
-                newDate = currentDate.AddDays(-1);
-            }
-            if (action == "forward") {
-                newDate = currentDate.AddDays(1);
-            }
-            return RedirectToAction("Index", "Home", new { year = newDate.Year, month = newDate.Month, day = newDate.Day });
-        }
+        //fill the data to the chart
         private List<decimal> FillTheChart (List<Row> rows, List<string> names) {
             List<decimal> totalList = new List<decimal>();
             foreach (var name in names) {
@@ -169,6 +182,7 @@ namespace TinyShop.Controllers {
             }
             return totalList;
         }
+
         //merge the strings and compare numbers for chart whom contain two datasets
         private ChartInfo DataMerge (List<string> oneString, List<string> twoString, List<decimal> oneNumber, List<decimal> twoNumber) {
             List<string> commonString = new List<string>();
