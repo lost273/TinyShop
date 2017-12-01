@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Xml.Serialization;
 using TinyShop.Filters;
 using TinyShop.Models;
 
@@ -115,14 +116,21 @@ namespace TinyShop.Controllers {
         }
         [HttpPost]
         public ActionResult ChangeFile (string name, string action) {
+            string fullPath = Request.MapPath("~/Files/" + name);
             if (action == "delete") {
-                string fullPath = Request.MapPath("~/Files/" + name);
                 if (System.IO.File.Exists(fullPath)) {
                     System.IO.File.Delete(fullPath);
                 }
             }
             if (action == "apply") {
-
+                System.Data.DataSet myObject;
+                // Construct an instance of the XmlSerializer with the type
+                // of object that is being deserialized.
+                XmlSerializer mySerializer = new XmlSerializer(typeof(System.Data.DataSet));
+                // To read the file, create a FileStream.
+                FileStream myFileStream = new FileStream(fullPath, FileMode.Open);
+                // Call the Deserialize method and cast to the object type.
+                myObject = (System.Data.DataSet)mySerializer.Deserialize(myFileStream);
             }
             return RedirectToAction("Import");
         }
