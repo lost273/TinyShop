@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
@@ -123,14 +124,25 @@ namespace TinyShop.Controllers {
                 }
             }
             if (action == "apply") {
-                System.Data.DataSet myObject;
+                System.Data.DataSet ds;
                 // Construct an instance of the XmlSerializer with the type
                 // of object that is being deserialized.
                 XmlSerializer mySerializer = new XmlSerializer(typeof(System.Data.DataSet));
                 // To read the file, create a FileStream.
                 FileStream myFileStream = new FileStream(fullPath, FileMode.Open);
                 // Call the Deserialize method and cast to the object type.
-                myObject = (System.Data.DataSet)mySerializer.Deserialize(myFileStream);
+                ds = (DataSet)mySerializer.Deserialize(myFileStream);
+                Row newRow = new Row();
+                newRow.Date = DateTime.Parse(ds.DataSetName);
+                for (int row = 0; row < ds.Tables[0].Rows.Count - 1; row++) {
+                    newRow.Name = ds.Tables[0].Rows[row][0].ToString();
+                    newRow.Quantity = Convert.ToInt32(ds.Tables[0].Rows[row][1]);
+                    newRow.Cost = Convert.ToDecimal(ds.Tables[0].Rows[row][2]);
+                    newRow.Total = Convert.ToDecimal(ds.Tables[0].Rows[row][3]);
+                    db.Rows.Add(newRow);
+                    db.SaveChanges();
+                }
+                myFileStream.Close();
             }
             return RedirectToAction("Import");
         }
