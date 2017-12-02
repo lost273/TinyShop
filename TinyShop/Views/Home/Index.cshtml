@@ -46,13 +46,18 @@
                         <input type="hidden" name="row.RowId" class="form-control" value="@row.RowId">
                         <input type="hidden" name="row.Date" class="form-control" value="@row.Date">
                         <select name="row.Name" class="form-control" selected="@row.Name">
-                            @foreach (var product in ViewBag.Products) {
+                            @{bool  productIsSelect = false;}
+                             @foreach (var product in ViewBag.Products) {
                                 if (product.Name == row.Name) {
                                     <option value="@product.Name" selected="selected">@product.Name</option>
-                                }
-                                else {
+                                     productIsSelect = true;
+                                 }
+                                 else {
                                     <option value="@product.Name">@product.Name</option>
                                 }
+                             }
+                            @if (!productIsSelect) {
+                            <option value="@row.Name" selected="selected">@row.Name</option>
                             }
                         </select>
                     </div>
