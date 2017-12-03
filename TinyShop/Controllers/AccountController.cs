@@ -136,7 +136,7 @@ namespace TinyShop.Controllers
 
         //
         // GET: /Account/Register
-        //[AllowAnonymous]
+        [AllowAnonymous]
         public ActionResult Register()
         {
             return View();
@@ -149,7 +149,7 @@ namespace TinyShop.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
-            if (ModelState.IsValid)
+            if ((ModelState.IsValid)&&(UserManager.FindByName("")))
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
@@ -187,7 +187,7 @@ namespace TinyShop.Controllers
 
         //
         // GET: /Account/ForgotPassword
-        [AllowAnonymous]
+        //[AllowAnonymous]
         public ActionResult ForgotPassword()
         {
             return View();
@@ -196,7 +196,7 @@ namespace TinyShop.Controllers
         //
         // POST: /Account/ForgotPassword
         [HttpPost]
-        [AllowAnonymous]
+        //[AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
         {
@@ -223,7 +223,7 @@ namespace TinyShop.Controllers
 
         //
         // GET: /Account/ForgotPasswordConfirmation
-        [AllowAnonymous]
+        //[AllowAnonymous]
         public ActionResult ForgotPasswordConfirmation()
         {
             return View();
@@ -231,7 +231,7 @@ namespace TinyShop.Controllers
 
         //
         // GET: /Account/ResetPassword
-        [AllowAnonymous]
+        //[AllowAnonymous]
         public ActionResult ResetPassword(string code)
         {
             return code == null ? View("Error") : View();
@@ -240,7 +240,7 @@ namespace TinyShop.Controllers
         //
         // POST: /Account/ResetPassword
         [HttpPost]
-        [AllowAnonymous]
+        //[AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
         {
