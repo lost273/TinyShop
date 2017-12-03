@@ -149,9 +149,9 @@ namespace TinyShop.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
-            if ((ModelState.IsValid)&&(UserManager.FindByName("")))
+            if ((ModelState.IsValid)&&(UserManager.FindByName("admin") == null))
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -265,7 +265,7 @@ namespace TinyShop.Controllers
 
         //
         // GET: /Account/ResetPasswordConfirmation
-        [AllowAnonymous]
+        //[AllowAnonymous]
         public ActionResult ResetPasswordConfirmation()
         {
             return View();
@@ -274,7 +274,7 @@ namespace TinyShop.Controllers
         //
         // POST: /Account/ExternalLogin
         [HttpPost]
-        [AllowAnonymous]
+        //[AllowAnonymous]
         [ValidateAntiForgeryToken]
         public ActionResult ExternalLogin(string provider, string returnUrl)
         {
