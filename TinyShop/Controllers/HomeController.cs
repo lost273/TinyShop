@@ -59,6 +59,7 @@ namespace TinyShop.Controllers {
 
             return RedirectToAction("Index", "Home", new { year = row.Date.Year, month = row.Date.Month, day = row.Date.Day });
         }
+        //navigation through the days
         [HttpPost]
         public ActionResult BackInTime (DateTime currentDate, string action) {
             DateTime newDate = new DateTime();
@@ -134,6 +135,7 @@ namespace TinyShop.Controllers {
                 // Call the Deserialize method and cast to the object type.
                 ds = (DataSet)mySerializer.Deserialize(myFileStream);
                 Row newRow = new Row();
+                //name of dataset from xml file contains the date
                 newRow.Date = DateTime.Parse(ds.DataSetName);
                 for (int row = 0; row < ds.Tables[0].Rows.Count - 1; row++) {
                     newRow.Name = ds.Tables[0].Rows[row][0].ToString();

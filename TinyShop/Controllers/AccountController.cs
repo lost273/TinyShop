@@ -149,6 +149,7 @@ namespace TinyShop.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+            // allow registration for the one person. this person have the name admin
             if ((ModelState.IsValid)&&(UserManager.FindByName("admin") == null))
             {
                 var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
