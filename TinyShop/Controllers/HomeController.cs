@@ -115,6 +115,7 @@ namespace TinyShop.Controllers {
             }
             return RedirectToAction("Import");
         }
+        //Import a data to the base OR delete the import file
         [HttpPost]
         public ActionResult ChangeFile (string name, string action) {
             string fullPath = Request.MapPath("~/Files/" + name);
