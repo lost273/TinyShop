@@ -159,12 +159,12 @@ namespace TinyShop.Controllers {
             List<Row> rowsTwo = db.Rows.Where(row => (row.Date.Month == dateRequestTwo.Month) && (row.Date.Year == dateRequestTwo.Year)).ToList();
 
             //get data for the whole year
-            List<string> monthsYearOne = db.Rows.Where(row => row.Date.Year == dateRequestOne.Year).Select(m => m.Date.Month.ToString()).Distinct().ToList();
+            List<string> monthsYearOne = db.Rows.Where(row => row.Date.Year == dateRequestOne.Year).Select(m => m.Date.Month).Distinct().OrderBy(m => m).Select(m => m.ToString()).ToList();
             List<string> monthsYearTwo = new List<string>();
             List<decimal> totalYearOne = new List<decimal>();
             List<decimal> totalYearTwo = new List<decimal>();
             if (dateRequestOne.Year != dateRequestTwo.Year) {
-                monthsYearTwo = db.Rows.Where(row => row.Date.Year == dateRequestTwo.Year).Select(m => m.Date.Month.ToString()).Distinct().ToList();
+                monthsYearTwo = db.Rows.Where(row => row.Date.Year == dateRequestTwo.Year).Select(m => m.Date.Month).Distinct().OrderBy(m => m).Select(m => m.ToString()).ToList();
                 foreach (string month in monthsYearTwo) {
                     totalYearTwo.Add(db.Rows.Where(m => (m.Date.Month.ToString() == month) && (m.Date.Year == dateRequestTwo.Year)).Select(t => t.Total).Sum());
                 }
@@ -181,8 +181,8 @@ namespace TinyShop.Controllers {
             chartMonth = DataMerge(ChartNamesOne, ChartNamesTwo, ChartTotalOne, ChartTotalTwo);
             ViewBag.chartYear = DataMerge(monthsYearOne, monthsYearTwo, totalYearOne, totalYearTwo);
             //available months and years
-            ViewBag.requestYears = db.Rows.Select(r => r.Date.Year).Distinct().ToList();
-            ViewBag.requestMonths = db.Rows.Select(r => r.Date.Month).Distinct().ToList();
+            ViewBag.requestYears = db.Rows.Select(r => r.Date.Year).Distinct().OrderBy(m => m).ToList();
+            ViewBag.requestMonths = db.Rows.Select(r => r.Date.Month).Distinct().OrderBy(y => y).ToList();
 
             //title for the chart
             ViewBag.dateRequestOne = $"(Period №1 - {dateRequestOne.Month}.{dateRequestOne.Year})";
