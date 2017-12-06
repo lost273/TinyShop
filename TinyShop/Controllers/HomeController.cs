@@ -12,7 +12,7 @@ using TinyShop.Models;
 
 namespace TinyShop.Controllers {
     [MyAuth]
-    [CatchException]
+    //[CatchException]
     public class HomeController : Controller {
         OneDayContext db = new OneDayContext();
         [HttpGet]
