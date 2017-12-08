@@ -19,7 +19,7 @@ namespace TinyShop.Controllers {
         public ActionResult Index (int year = 1, int month = 1, int day = 1) {
             List<UserTimeZone> zone = new List<UserTimeZone>();
             zone = db.UserTimeZones.Select(u => u).ToList();
-            DateTime today = GetDateFromDb(zone);
+            DateTime today = GetDateFromDb(zone).Date;
             if (zone.Count != 0) {
                 ViewBag.TimeZone = zone[0].Zone;
             }
