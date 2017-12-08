@@ -8,7 +8,7 @@
         <div class="panel panel-default">
             <div class="panel-heading clearfix">
                 <i class="icon-calendar"></i>
-                <h3 class="panel-title">Current date - @DateTime.Today.ToLongDateString()</h3>
+                <h3 class="panel-title">Current date - <u>@ViewBag.Today.ToLongDateString()</u> Current time zone - <u>@ViewBag.TimeZone</u> </h3>
                 <br/>
                 <form class="form-inline" role="form" action="/Home/BackInTime" method="post">
                     <input type="hidden" name="currentDate" class="form-control" value="@ViewBag.Time">

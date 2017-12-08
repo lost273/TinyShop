@@ -17,13 +17,23 @@ namespace TinyShop.Controllers {
         OneDayContext db = new OneDayContext();
         [HttpGet]
         public ActionResult Index (int year = 1, int month = 1, int day = 1) {
+            List<UserTimeZone> zone = new List<UserTimeZone>();
+            zone = db.UserTimeZones.Select(u => u).ToList();
+            DateTime today = GetDateFromDb(zone);
+            if (zone.Count != 0) {
+                ViewBag.TimeZone = zone[0].Zone;
+            }
+            else {
+                ViewBag.TimeZone = "Not set";
+            }
             ViewBag.Products = db.Products;
             ViewBag.Total = 0;
+            ViewBag.Today = today;
             DateTime dateRequest = new DateTime(year, month, day);
             // if user went from the main page
             if (dateRequest == DateTime.MinValue) {
-                dateRequest = DateTime.Today;
-                ViewBag.Time = DateTime.Today.Date;
+                dateRequest = today;
+                ViewBag.Time = today;
             }
             else {
                 ViewBag.Time = dateRequest.Date;
@@ -210,6 +220,25 @@ namespace TinyShop.Controllers {
             ViewBag.periodOne = $"{dateRequestOne.Year}";
             ViewBag.periodTwo = $"{dateRequestTwo.Year}";
             return View(chartMonth);
+        }
+        // returns the date according from user time zone
+        private DateTime GetDateFromDb (List<UserTimeZone> zone) {
+            if (zone.Count == 0) {
+                return DateTime.Today;
+            }
+            DateTime serverDateTime = DateTime.Now;
+            DateTime dbDateTime = serverDateTime.ToUniversalTime();
+
+            //get date time offset for UTC date stored in the database
+            DateTimeOffset dbDateTimeOffset = new DateTimeOffset(dbDateTime, TimeSpan.Zero);
+
+            //get user's time zone from profile stored in the database
+            TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(zone[0].Zone);
+
+            //convert  db offset to user offset
+            DateTimeOffset userDateTimeOffset = TimeZoneInfo.ConvertTime(dbDateTimeOffset, userTimeZone);
+
+            return userDateTimeOffset.DateTime;
         }
         //fill the data to the chart
         private List<decimal> FillTheChart (List<Row> rows, List<string> names) {
