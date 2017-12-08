@@ -110,14 +110,16 @@ namespace TinyShop.Controllers {
         }
         [HttpPost]
         public ActionResult ChangeTimeZone (UserTimeZone timeZone) {
-            if (db.UserTimeZones.Find(timeZone.Id) != null) {
-                db.Entry(timeZone).State = EntityState.Modified;
-                db.SaveChanges();
+            List<UserTimeZone> userZoneFromDb = new List<UserTimeZone>();
+            userZoneFromDb = db.UserTimeZones.Select(u => u).ToList();
+            if (userZoneFromDb.Count != 0) {
+                foreach (UserTimeZone u in userZoneFromDb) {
+                    db.UserTimeZones.Remove(u);
+                    db.SaveChanges();
+                }
             }
-            else {
-                db.UserTimeZones.Add(timeZone);
-                db.SaveChanges();
-            }
+            db.UserTimeZones.Add(timeZone);
+            db.SaveChanges();
             return RedirectToAction("Сonfiguration");
         }
         [HttpGet]
