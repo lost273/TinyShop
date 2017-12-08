@@ -74,9 +74,9 @@ namespace TinyShop.Controllers {
         [HttpGet]
         public ActionResult Сonfiguration () {
             var timeZones = TimeZoneInfo.GetSystemTimeZones();
-            List<SelectListItem> items = new List<SelectListItem>();
+            List<string> items = new List<string>();
             foreach (var timeZone in timeZones) {
-                items.Add(new SelectListItem() { Text = timeZone.Id });
+                items.Add(timeZone.Id);
             }
             ViewBag.TimeZones = items;
             return View(db.Products.ToList());
@@ -106,6 +106,18 @@ namespace TinyShop.Controllers {
                 db.SaveChanges();
             }
 
+            return RedirectToAction("Сonfiguration");
+        }
+        [HttpPost]
+        public ActionResult ChangeTimeZone (UserTimeZone timeZone) {
+            if (db.UserTimeZones.Find(timeZone.Id) != null) {
+                db.Entry(timeZone).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            else {
+                db.UserTimeZones.Add(timeZone);
+                db.SaveChanges();
+            }
             return RedirectToAction("Сonfiguration");
         }
         [HttpGet]

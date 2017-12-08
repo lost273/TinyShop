@@ -32,9 +32,15 @@ namespace TinyShop.Models {
         public List<decimal> ChartTotalTwo { get; set; }
         public List<string> ChartNamesTwo { get; set; }
     }
+    public class UserTimeZone {
+        [Key]
+        public int Id { get; set; }
+        public string Zone { get; set; }
+    }
     public class OneDayContext : DbContext {
         public OneDayContext () : base("DefaultConnection")  { }
         public DbSet<Product> Products { get; set; }
         public DbSet<Row> Rows { get; set; }
+        public DbSet<UserTimeZone> UserTimeZones { get; set; }
     }
 }

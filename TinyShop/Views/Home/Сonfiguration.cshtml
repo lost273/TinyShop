@@ -1,11 +1,16 @@
 ﻿@model List<TinyShop.Models.Product>
 
 <h2>Select your time zone:</h2>
-
-
-
-
-
+<form class="form-inline" role="form" action="/Home/ChangeTimeZone" method="post">
+    <div class="form-group">
+        <select name="timeZone.Zone" class="form-control">
+            @foreach (var timeZone in ViewBag.TimeZones) {
+                <option value="@timeZone">@timeZone</option>
+            }
+        </select>
+            <button type="submit" class="btn btn-success">Change</button>
+    </div>
+</form>
 
 <h2>Edit or delete product:</h2>
     <div class="row">
