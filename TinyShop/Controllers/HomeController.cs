@@ -73,6 +73,12 @@ namespace TinyShop.Controllers {
         }
         [HttpGet]
         public ActionResult Сonfiguration () {
+            var timeZones = TimeZoneInfo.GetSystemTimeZones();
+            List<SelectListItem> items = new List<SelectListItem>();
+            foreach (var timeZone in timeZones) {
+                items.Add(new SelectListItem() { Text = timeZone.Id });
+            }
+            ViewBag.TimeZones = items;
             return View(db.Products.ToList());
         }
         [HttpPost]
